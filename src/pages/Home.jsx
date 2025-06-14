@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { HiOutlineMail } from 'react-icons/hi';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -9,6 +11,7 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 `;
 
 const HeroSection = styled.section`
@@ -16,29 +19,33 @@ const HeroSection = styled.section`
   flex-direction: column;
   align-items: flex-start;
   gap: 2rem;
+  position: relative;
+  z-index: 2;
 `;
 
-const HeroTitle = styled.h1`
-  font-size: 3.5rem;
+const HeroTitle = styled(motion.h1)`
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   margin-bottom: 1rem;
   background: linear-gradient(90deg, #00a8ff, #0066ff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  line-height: 1.2;
 `;
 
-const HeroSubtitle = styled.h2`
-  font-size: 1.8rem;
+const HeroSubtitle = styled(motion.h2)`
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 1.5rem;
 `;
 
-const HeroText = styled.p`
-  font-size: 1.2rem;
+const HeroText = styled(motion.p)`
+  font-size: clamp(1rem, 2vw, 1.2rem);
   max-width: 600px;
   line-height: 1.6;
   margin-bottom: 2rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
 const CTAButton = styled(motion.button)`
@@ -53,6 +60,8 @@ const CTAButton = styled(motion.button)`
   position: relative;
   overflow: hidden;
   z-index: 1;
+  font-weight: 600;
+  margin-right: 1rem;
 
   &:hover {
     color: #0a0a1a;
@@ -76,27 +85,121 @@ const CTAButton = styled(motion.button)`
   }
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const SocialLinks = styled(motion.div)`
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 3rem;
+`;
+
+const SocialIcon = styled(motion.a)`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #00a8ff;
+    transform: translateY(-3px);
+  }
+`;
+
+const BackgroundShape = styled.div`
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 168, 255, 0.1) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 1;
+  right: -200px;
+  top: 100px;
+`;
+
+const HighlightText = styled.span`
+  color: #00a8ff;
+  font-weight: 600;
+`;
+
 const Home = () => {
   return (
     <HomeContainer>
+      <BackgroundShape />
+      
       <HeroSection>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <HeroSubtitle>Hi, I'm</HeroSubtitle>
-          <HeroTitle>Web Developer</HeroTitle>
-          <HeroText>
-            I create beautiful, functional websites and applications with modern technologies. 
-            Specializing in React, JavaScript, and responsive design.
-          </HeroText>
-          <CTAButton
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <HeroSubtitle
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
           >
-            View My Work
-          </CTAButton>
+            Hi, I'm
+          </HeroSubtitle>
+          <HeroTitle
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            <HighlightText>Frontend</HighlightText> Developer
+          </HeroTitle>
+          <HeroText
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            I create <HighlightText>beautiful, functional</HighlightText> websites and applications with modern 
+            technologies. Specializing in <HighlightText>React</HighlightText>, <HighlightText>JavaScript</HighlightText>, 
+            and <HighlightText>responsive design</HighlightText>.
+          </HeroText>
+          
+          <ButtonGroup>
+            <CTAButton
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            >
+              View My Work
+            </CTAButton>
+            <CTAButton
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9, duration: 0.8 }}
+              style={{ background: '#00a8ff', color: '#0a0a1a' }}
+            >
+              Contact Me
+            </CTAButton>
+          </ButtonGroup>
+          
+          <SocialLinks
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+          >
+            <SocialIcon href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <FaGithub />
+            </SocialIcon>
+            <SocialIcon href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin />
+            </SocialIcon>
+            <SocialIcon href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <FaTwitter />
+            </SocialIcon>
+            <SocialIcon href="mailto:example@email.com">
+              <HiOutlineMail />
+            </SocialIcon>
+          </SocialLinks>
         </motion.div>
       </HeroSection>
     </HomeContainer>
