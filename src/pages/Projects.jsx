@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiExternalLink, FiX, FiPlay } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiX, FiPlay, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { FaReact, FaNode, FaJs } from 'react-icons/fa';
 import { SiTypescript, SiTailwindcss, SiMongodb, SiPostgresql } from 'react-icons/si';
 
@@ -21,7 +21,7 @@ const projects = [
     technologies: ['React', 'Express', 'SQL', 'Tailwind CSS', 'Next.js'],
     githubUrl: 'https://github.com/AmarWaqar-TSKLI/GameStore2.0',
     liveUrl: 'https://gamestore-rw.vercel.app/',
-    image: '/g1.png',
+    images: ['/g1.png'],
     video: '/gameexplorer.mp4'
   },
   {
@@ -39,7 +39,7 @@ const projects = [
     technologies: ['React', 'Java', 'Spring Boot', 'SQL', 'JWT'],
     githubUrl: 'https://github.com/Haseebahmad22/Rentinel',
     liveUrl: '#',
-    image: '/r1.png',
+    images: ['/r1.png', '/r2.png', '/r3.png'],
     video: '/rentinel.mp4'
   },
   {
@@ -57,7 +57,7 @@ const projects = [
     technologies: ['React', 'Firebase', 'Tailwind CSS', 'Node.js'],
     githubUrl: '#',
     liveUrl: '#',
-    image: '/j1.jpg',
+    images: ['/j1.jpg', '/j2.jpg', '/j3.jpg', '/j4.jpg', '/j5.jpg', '/j6.jpg'],
     video: '/journez.mp4'
   },
   {
@@ -75,8 +75,26 @@ const projects = [
     technologies: ['React', 'Express', 'MongoDB', 'TypeScript'],
     githubUrl: '#',
     liveUrl: '#',
-    image: '/q1.png',
+    images: ['/q1.png', '/q2.png', '/q3.png', '/q4.png', '/q5.png'],
     video: '/questrunner.mp4'
+  },
+  {
+    id: 5,
+    title: 'VoltMaster',
+    description: 'An advanced electrical management system for monitoring and controlling power distribution with real-time analytics and safety features.',
+    features: [
+      'Real-time monitoring',
+      'Power analytics',
+      'Safety alerts',
+      'Remote control',
+      'Energy optimization',
+      'Maintenance scheduling'
+    ],
+    technologies: ['React', 'Node.js', 'IoT', 'MongoDB', 'Socket.io'],
+    githubUrl: '#',
+    liveUrl: '#',
+    images: ['/v1.jpg', '/v2.jpg', '/v3.jpg'],
+    video: '/voltmaster.mp4'
   }
 ];
 
@@ -166,6 +184,81 @@ const ProjectImage = styled.img`
 
   ${ProjectCard}:hover & {
     transform: scale(1.05);
+  }
+`;
+
+const SlideshowContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const SlideImage = styled(motion.img)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const SlideNavigation = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+`;
+
+const SlideDot = styled(motion.button)`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: ${({ $active, theme }) => $active ? theme.colors.primary : 'rgba(255, 255, 255, 0.5)'};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary};
+    transform: scale(1.2);
+  }
+`;
+
+const SlideArrow = styled(motion.button)`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  &.left {
+    left: 1rem;
+  }
+
+  &.right {
+    right: 1rem;
   }
 `;
 
@@ -283,6 +376,84 @@ const ModalContent = styled(motion.div)`
   position: relative;
 `;
 
+const ModalImageContainer = styled.div`
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  border-radius: ${({ theme }) => theme.borderRadius['2xl']} ${({ theme }) => theme.borderRadius['2xl']} 0 0;
+`;
+
+const ModalSlideshow = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const ModalSlideImage = styled(motion.img)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ModalSlideNav = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 3;
+`;
+
+const ModalSlideDot = styled(motion.button)`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid ${({ $active, theme }) => $active ? theme.colors.primary : 'rgba(255, 255, 255, 0.7)'};
+  background: ${({ $active, theme }) => $active ? theme.colors.primary : 'transparent'};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primary};
+    transform: scale(1.2);
+  }
+`;
+
+const ModalSlideArrow = styled(motion.button)`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  font-size: 1.2rem;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  &.left {
+    left: 1rem;
+  }
+
+  &.right {
+    right: 1rem;
+  }
+`;
+
 const ModalVideo = styled.video`
   width: 100%;
   height: 400px;
@@ -340,6 +511,206 @@ const FeatureItem = styled.li`
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+
+  // Initialize image indices for all projects
+  useEffect(() => {
+    const initialIndices = {};
+    projects.forEach(project => {
+      initialIndices[project.id] = 0;
+    });
+    setCurrentImageIndex(initialIndices);
+  }, []);
+
+  // Auto-advance slideshow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex(prev => {
+        const newIndices = { ...prev };
+        projects.forEach(project => {
+          if (project.images.length > 1) {
+            newIndices[project.id] = (prev[project.id] + 1) % project.images.length;
+          }
+        });
+        return newIndices;
+      });
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Reset modal image index when project changes
+  useEffect(() => {
+    if (selectedProject) {
+      setModalImageIndex(0);
+    }
+  }, [selectedProject]);
+
+  const handlePrevImage = (projectId, e) => {
+    e.stopPropagation();
+    const project = projects.find(p => p.id === projectId);
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [projectId]: prev[projectId] === 0 ? project.images.length - 1 : prev[projectId] - 1
+    }));
+  };
+
+  const handleNextImage = (projectId, e) => {
+    e.stopPropagation();
+    const project = projects.find(p => p.id === projectId);
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [projectId]: (prev[projectId] + 1) % project.images.length
+    }));
+  };
+
+  const goToSlide = (projectId, index, e) => {
+    e.stopPropagation();
+    setCurrentImageIndex(prev => ({
+      ...prev,
+      [projectId]: index
+    }));
+  };
+
+  const handleModalPrevImage = () => {
+    setModalImageIndex(prev => 
+      prev === 0 ? selectedProject.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleModalNextImage = () => {
+    setModalImageIndex(prev => 
+      (prev + 1) % selectedProject.images.length
+    );
+  };
+
+  const goToModalSlide = (index) => {
+    setModalImageIndex(index);
+  };
+
+  const ImageSlideshow = ({ project }) => {
+    const currentIndex = currentImageIndex[project.id] || 0;
+    
+    if (project.images.length === 1) {
+      return <ProjectImage src={project.images[0]} alt={project.title} />;
+    }
+
+    return (
+      <SlideshowContainer>
+        <AnimatePresence mode="wait">
+          <SlideImage
+            key={currentIndex}
+            src={project.images[currentIndex]}
+            alt={`${project.title} - Image ${currentIndex + 1}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          />
+        </AnimatePresence>
+
+        {project.images.length > 1 && (
+          <>
+            <SlideArrow
+              className="left"
+              onClick={(e) => handlePrevImage(project.id, e)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FiChevronLeft />
+            </SlideArrow>
+
+            <SlideArrow
+              className="right"
+              onClick={(e) => handleNextImage(project.id, e)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FiChevronRight />
+            </SlideArrow>
+
+            <SlideNavigation>
+              {project.images.map((_, index) => (
+                <SlideDot
+                  key={index}
+                  $active={index === currentIndex}
+                  onClick={(e) => goToSlide(project.id, index, e)}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </SlideNavigation>
+          </>
+        )}
+      </SlideshowContainer>
+    );
+  };
+
+  const ModalImageSlideshow = () => {
+    if (!selectedProject || selectedProject.images.length === 0) return null;
+
+    if (selectedProject.images.length === 1) {
+      return (
+        <ModalImageContainer>
+          <ModalSlideImage
+            src={selectedProject.images[0]}
+            alt={selectedProject.title}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          />
+        </ModalImageContainer>
+      );
+    }
+
+    return (
+      <ModalImageContainer>
+        <ModalSlideshow>
+          <AnimatePresence mode="wait">
+            <ModalSlideImage
+              key={modalImageIndex}
+              src={selectedProject.images[modalImageIndex]}
+              alt={`${selectedProject.title} - Image ${modalImageIndex + 1}`}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4 }}
+            />
+          </AnimatePresence>
+
+          <ModalSlideArrow
+            className="left"
+            onClick={handleModalPrevImage}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FiChevronLeft />
+          </ModalSlideArrow>
+
+          <ModalSlideArrow
+            className="right"
+            onClick={handleModalNextImage}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FiChevronRight />
+          </ModalSlideArrow>
+
+          <ModalSlideNav>
+            {selectedProject.images.map((_, index) => (
+              <ModalSlideDot
+                key={index}
+                $active={index === modalImageIndex}
+                onClick={() => goToModalSlide(index)}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              />
+            ))}
+          </ModalSlideNav>
+        </ModalSlideshow>
+      </ModalImageContainer>
+    );
+  };
 
   return (
     <ProjectsContainer>
@@ -366,7 +737,7 @@ const Projects = () => {
             onClick={() => setSelectedProject(project)}
           >
             <ProjectMedia>
-              <ProjectImage src={project.image} alt={project.title} />
+              <ImageSlideshow project={project} />
               <PlayButton
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -436,13 +807,7 @@ const Projects = () => {
                 <FiX />
               </CloseButton>
               
-              <ModalVideo
-                src={selectedProject.video}
-                controls
-                autoPlay
-                muted
-                loop
-              />
+              <ModalImageSlideshow />
               
               <ModalDetails>
                 <ProjectTitle>{selectedProject.title}</ProjectTitle>
@@ -480,431 +845,6 @@ const Projects = () => {
                   </ProjectLink>
                 </ProjectLinks>
               </ModalDetails>
-            </ModalContent>
-          </ModalOverlay>
-        )}
-      </AnimatePresence>
-    </ProjectsContainer>
-  );
-};
-
-export default Projects;
-
-const ProjectImage = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.image});
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.5s ease;
-  
-  ${ProjectCard}:hover & {
-    transform: scale(1.05);
-  }
-`;
-
-const VideoThumbnail = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.thumbnail});
-  background-size: cover;
-  background-position: center;
-`;
-
-const PlayButton = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  background: rgba(0, 168, 255, 0.8);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-  
-  ${ProjectCard}:hover & {
-    background: rgba(0, 168, 255, 1);
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-`;
-
-const ProjectContent = styled.div`
-  padding: 2rem;
-`;
-
-const ProjectTitle = styled.h3`
-  font-size: 1.8rem;
-  color: #00a8ff;
-  margin-bottom: 1rem;
-  font-weight: 700;
-`;
-
-const ProjectDescription = styled.p`
-  font-size: 1.2rem;
-  color: #b0b0b0;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-`;
-
-const TechList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-`;
-
-const TechItem = styled(motion.span)`
-  background-color: rgba(0, 168, 255, 0.15);
-  color: #00a8ff;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 1rem;
-  font-weight: 500;
-`;
-
-const ProjectLinks = styled.div`
-  display: flex;
-  gap: 1.5rem;
-`;
-
-const ProjectLink = styled(motion.a)`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #00a8ff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  background: rgba(0, 168, 255, 0.1);
-  border: 1px solid rgba(0, 168, 255, 0.2);
-
-  &:hover {
-    background: rgba(0, 168, 255, 0.3);
-    color: white;
-    transform: translateY(-2px);
-  }
-`;
-
-// Modal styles
-const ModalOverlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  backdrop-filter: blur(8px);
-`;
-
-const ModalContent = styled(motion.div)`
-  background-color: #101025;
-  border-radius: 16px;
-  max-width: 1200px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  border: 1px solid rgba(0, 168, 255, 0.3);
-  box-shadow: 0 20px 50px rgba(0, 168, 255, 0.2);
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2rem 1rem;
-  position: sticky;
-  top: 0;
-  background-color: #101025;
-  z-index: 1;
-  border-bottom: 1px solid rgba(0, 168, 255, 0.1);
-`;
-
-const ModalTitle = styled.h2`
-  font-size: 2.5rem;
-  color: #00a8ff;
-  font-weight: 700;
-  margin: 0;
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  color: #b0b0b0;
-  font-size: 1.8rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0.5rem;
-
-  &:hover {
-    color: #00a8ff;
-    transform: rotate(90deg);
-  }
-`;
-
-const ModalBody = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  padding: 0 2rem 2rem;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ProjectDetails = styled.div``;
-
-const SectionTitle = styled.h3`
-  font-size: 1.8rem;
-  color: #00a8ff;
-  margin: 2rem 0 1rem;
-  font-weight: 600;
-`;
-
-const ProjectDescriptionModal = styled.p`
-  font-size: 1.2rem;
-  color: #b0b0b0;
-  line-height: 1.8;
-  margin-bottom: 2rem;
-`;
-
-const ProjectFeatures = styled.ul`
-  margin: 1.5rem 0 2.5rem;
-  padding-left: 1.5rem;
-`;
-
-const ProjectFeature = styled(motion.li)`
-  font-size: 1.2rem;
-  color: #b0b0b0;
-  margin-bottom: 1rem;
-  padding-left: 1rem;
-  position: relative;
-  line-height: 1.6;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: -0.5rem;
-    top: 0.7rem;
-    width: 8px;
-    height: 8px;
-    background-color: #00a8ff;
-    border-radius: 50%;
-  }
-`;
-
-const ProjectMediaContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-
-const MediaItem = styled.div`
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 168, 255, 0.2);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-`;
-
-const MediaImage = styled.img`
-  width: 100%;
-  height: auto;
-  display: block;
-`;
-
-const MediaVideo = styled.video`
-  width: 100%;
-  height: auto;
-  display: block;
-`;
-
-const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = (project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  return (
-    <ProjectsContainer>
-      <PageHeader
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <PageTitle>My Projects</PageTitle>
-        <PageSubtitle>
-          Here are some of my featured works. Click on any project to explore detailed information,
-          key features, and media demonstrations.
-        </PageSubtitle>
-      </PageHeader>
-
-      <ProjectsGrid>
-        {projects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            onClick={() => openModal(project)}
-            whileHover={{ y: -10 }}
-          >
-            <ProjectMedia>
-              {project.media[0].type === 'image' ? (
-                <ProjectImage image={project.media[0].url} />
-              ) : (
-                <VideoThumbnail thumbnail={project.media[0].thumbnail}>
-                  <PlayButton>
-                    <FaPlay />
-                  </PlayButton>
-                </VideoThumbnail>
-              )}
-            </ProjectMedia>
-            <ProjectContent>
-              <ProjectTitle>{project.title}</ProjectTitle>
-              <ProjectDescription>{project.description}</ProjectDescription>
-              <TechList>
-                {project.technologies.map((tech, index) => (
-                  <TechItem
-                    key={index}
-                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 168, 255, 0.25)' }}
-                  >
-                    {tech}
-                  </TechItem>
-                ))}
-              </TechList>
-              <ProjectLinks>
-                <ProjectLink
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <FiGithub /> View Code
-                </ProjectLink>
-                <ProjectLink
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <FiExternalLink /> Live Demo
-                </ProjectLink>
-              </ProjectLinks>
-            </ProjectContent>
-          </ProjectCard>
-        ))}
-      </ProjectsGrid>
-
-      <AnimatePresence>
-        {isModalOpen && selectedProject && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeModal}
-          >
-            <ModalContent
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ModalHeader>
-                <ModalTitle>{selectedProject.title}</ModalTitle>
-                <CloseButton onClick={closeModal}>
-                  <FiX />
-                </CloseButton>
-              </ModalHeader>
-              <ModalBody>
-                <ProjectDetails>
-                  <SectionTitle>Project Overview</SectionTitle>
-                  <ProjectDescriptionModal>
-                    {selectedProject.description}
-                  </ProjectDescriptionModal>
-
-                  <SectionTitle>Key Features</SectionTitle>
-                  <ProjectFeatures>
-                    {selectedProject.features.map((feature, index) => (
-                      <ProjectFeature
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
-                        {feature}
-                      </ProjectFeature>
-                    ))}
-                  </ProjectFeatures>
-
-                  <SectionTitle>Technologies Used</SectionTitle>
-                  <TechList>
-                    {selectedProject.technologies.map((tech, index) => (
-                      <TechItem
-                        key={index}
-                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(0, 168, 255, 0.25)' }}
-                      >
-                        {tech}
-                      </TechItem>
-                    ))}
-                  </TechList>
-
-                  <ProjectLinks style={{ marginTop: '2rem' }}>
-                    <ProjectLink
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <FiGithub /> View Code
-                    </ProjectLink>
-                    <ProjectLink
-                      href={selectedProject.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <FiExternalLink /> Live Demo
-                    </ProjectLink>
-                  </ProjectLinks>
-                </ProjectDetails>
-
-                <ProjectMediaContainer>
-                  <SectionTitle>Project Media</SectionTitle>
-                  {selectedProject.media.map((media, index) => (
-                    <MediaItem key={index}>
-                      {media.type === 'image' ? (
-                        <MediaImage src={media.url} alt={media.alt || `${selectedProject.title} screenshot`} />
-                      ) : (
-                        <MediaVideo controls poster={media.thumbnail}>
-                          <source src={media.url} type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </MediaVideo>
-                      )}
-                    </MediaItem>
-                  ))}
-                </ProjectMediaContainer>
-              </ModalBody>
             </ModalContent>
           </ModalOverlay>
         )}
