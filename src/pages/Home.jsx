@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaReact, FaJs, FaNode, FaGit, FaFigma, FaDocker, FaPython, FaAws, FaJava } from 'react-icons/fa';
 import { HiOutlineMail, HiCode, HiDesktopComputer, HiCog } from 'react-icons/hi';
 import { SiTypescript, SiTailwindcss, SiMongodb, SiFirebase, SiPostgresql, SiRedis, SiExpress, SiNextdotjs, SiVercel, SiNetlify, SiVscodium, SiPostman, SiGithub, SiLinux } from 'react-icons/si';
@@ -17,10 +17,18 @@ const HeroSection = styled.section`
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
+  padding: 8rem ${({ theme }) => theme.spacing.xl} 2rem;
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 6rem ${({ theme }) => theme.spacing.lg} 2rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 5rem ${({ theme }) => theme.spacing.md} 2rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -514,8 +522,41 @@ const FloatingElement = styled(motion.div)`
   }
 `;
 
+// Particle System
+const ParticleContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+`;
+
+const FloatingParticle = styled(motion.div)`
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: ${({ theme }) => theme.colors.accent};
+  border-radius: 50%;
+  opacity: 0.4;
+  box-shadow: 0 0 8px ${({ theme }) => theme.colors.accent}60;
+`;
+
 const Home = () => {
   const [activeTab, setActiveTab] = useState('frontend');
+
+  // Particle system data
+  const particles = Array.from({ length: 25 }, (_, i) => ({
+    id: i,
+    startX: Math.random() * 100,
+    startY: Math.random() * 100,
+    endX: Math.random() * 100,
+    endY: Math.random() * 100,
+    delay: Math.random() * 15,
+    duration: 20 + Math.random() * 10,
+  }));
 
   const technologies = {
     frontend: [
@@ -559,6 +600,30 @@ const Home = () => {
       <FloatingElement />
       <FloatingElement />
       <FloatingElement />
+      
+      {/* Floating Particles */}
+      <ParticleContainer>
+        {particles.map((particle) => (
+          <FloatingParticle
+            key={particle.id}
+            style={{
+              left: `${particle.startX}%`,
+              top: `${particle.startY}%`,
+            }}
+            animate={{
+              left: [`${particle.startX}%`, `${particle.endX}%`],
+              top: [`${particle.startY}%`, `${particle.endY}%`],
+            }}
+            transition={{
+              duration: particle.duration,
+              delay: particle.delay,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </ParticleContainer>
       
       <HeroSection>
         <ContentWrapper>
