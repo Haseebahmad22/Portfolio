@@ -4,33 +4,54 @@ import { motion } from 'framer-motion';
 const SocialIconsContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
 
 const SocialIconLink = styled(motion.a)`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: ${({ theme }) => theme.borderRadius.full};
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #101025;
-  border: 1px solid rgba(0, 168, 255, 0.3);
-  transition: all 0.3s ease;
-  color: #00a8ff;
+  background: ${({ theme }) => theme.colors.cardBackground};
+  backdrop-filter: blur(10px);
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  transition: all ${({ theme }) => theme.transitions.smooth};
+  color: ${({ theme }) => theme.colors.primary};
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: ${({ theme }) => theme.colors.gradientPrimary};
+    transition: left ${({ theme }) => theme.transitions.smooth};
+    z-index: 0;
+  }
 
   &:hover {
-    background-color: #00a8ff;
-    color: #0a0a1a;
-    box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
-    border-color: #00a8ff;
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.glow};
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.background};
+
+    &::before {
+      left: 0;
+    }
   }
 
   svg {
     width: 20px;
     height: 20px;
     fill: currentColor;
+    position: relative;
+    z-index: 1;
   }
 `;
 
