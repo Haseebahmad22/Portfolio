@@ -130,13 +130,18 @@ const PageSubtitle = styled.p`
 
 const ProjectsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 2rem;
   margin-top: 3rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
   }
 `;
 
@@ -149,9 +154,10 @@ const ProjectCard = styled(motion.div)`
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  height: fit-content;
 
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     border-color: ${({ theme }) => theme.colors.borderHover};
     box-shadow: ${({ theme }) => theme.shadows.glowHover};
   }
@@ -170,10 +176,13 @@ const ProjectCard = styled(motion.div)`
 `;
 
 const ProjectMedia = styled.div`
-  height: 300px;
+  height: 250px;
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ProjectImage = styled.img`
@@ -183,7 +192,30 @@ const ProjectImage = styled.img`
   transition: transform 0.3s ease;
 
   ${ProjectCard}:hover & {
-    transform: scale(1.05);
+    transform: scale(1.02);
+  }
+`;
+
+const MediaOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
   }
 `;
 
@@ -191,162 +223,174 @@ const SlideshowContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SlideImage = styled(motion.img)`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const SlideNavigation = styled.div`
   position: absolute;
-  bottom: 1rem;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.5rem;
-  z-index: 2;
+  gap: 6px;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 `;
 
 const SlideDot = styled(motion.button)`
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   border: none;
-  background: ${({ $active, theme }) => $active ? theme.colors.primary : 'rgba(255, 255, 255, 0.5)'};
+  background: ${({ $active, theme }) => $active ? theme.colors.accent : 'rgba(255, 255, 255, 0.6)'};
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary};
-    transform: scale(1.2);
-  }
-`;
-
-const SlideArrow = styled(motion.button)`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-
-  ${ProjectCard}:hover & {
-    opacity: 1;
-  }
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.8);
-  }
-
-  &.left {
-    left: 1rem;
-  }
-
-  &.right {
-    right: 1rem;
+    background: ${({ theme }) => theme.colors.accent};
   }
 `;
 
 const PlayButton = styled(motion.div)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.7);
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 1.5rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  font-size: 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  z-index: 4;
 
-  ${ProjectCard}:hover & {
-    opacity: 1;
+  &:hover {
+    background: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent};
+    transform: scale(1.1);
   }
 `;
 
 const ProjectContent = styled.div`
-  padding: 2rem;
+  padding: 1.5rem;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 `;
 
 const ProjectDescription = styled.p`
   color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+
+const FeaturesList = styled.div`
+  margin-bottom: 1.25rem;
+`;
+
+const FeatureTitle = styled.h4`
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.accent};
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`;
+
+const FeatureGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+`;
+
+const FeatureItem = styled.div`
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  padding: 0.25rem 0;
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: ${({ theme }) => theme.colors.accent};
+    font-weight: bold;
+  }
 `;
 
 const TechStack = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
 `;
 
 const TechBadge = styled.span`
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   background: rgba(99, 102, 241, 0.1);
   color: ${({ theme }) => theme.colors.accent};
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
 `;
 
 const ProjectLinks = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
 `;
 
 const ProjectLink = styled(motion.a)`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
   transition: all 0.3s ease;
   text-decoration: none;
+  flex: 1;
+  justify-content: center;
 
   &:hover {
     color: ${({ theme }) => theme.colors.accent};
     border-color: ${({ theme }) => theme.colors.accent};
     background: rgba(99, 102, 241, 0.05);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 `;
 
@@ -486,7 +530,7 @@ const ModalDetails = styled.div`
   padding: 2rem;
 `;
 
-const FeaturesList = styled.ul`
+const ModalFeaturesList = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 0.5rem;
@@ -494,7 +538,7 @@ const FeaturesList = styled.ul`
   list-style: none;
 `;
 
-const FeatureItem = styled.li`
+const ModalFeatureItem = styled.li`
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: 0.5rem 0;
   position: relative;
@@ -523,47 +567,12 @@ const Projects = () => {
     setCurrentImageIndex(initialIndices);
   }, []);
 
-  // Auto-advance slideshow
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex(prev => {
-        const newIndices = { ...prev };
-        projects.forEach(project => {
-          if (project.images.length > 1) {
-            newIndices[project.id] = (prev[project.id] + 1) % project.images.length;
-          }
-        });
-        return newIndices;
-      });
-    }, 3000); // Change image every 3 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   // Reset modal image index when project changes
   useEffect(() => {
     if (selectedProject) {
       setModalImageIndex(0);
     }
   }, [selectedProject]);
-
-  const handlePrevImage = (projectId, e) => {
-    e.stopPropagation();
-    const project = projects.find(p => p.id === projectId);
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [projectId]: prev[projectId] === 0 ? project.images.length - 1 : prev[projectId] - 1
-    }));
-  };
-
-  const handleNextImage = (projectId, e) => {
-    e.stopPropagation();
-    const project = projects.find(p => p.id === projectId);
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [projectId]: (prev[projectId] + 1) % project.images.length
-    }));
-  };
 
   const goToSlide = (projectId, index, e) => {
     e.stopPropagation();
@@ -592,56 +601,23 @@ const Projects = () => {
   const ImageSlideshow = ({ project }) => {
     const currentIndex = currentImageIndex[project.id] || 0;
     
-    if (project.images.length === 1) {
-      return <ProjectImage src={project.images[0]} alt={project.title} />;
-    }
-
     return (
       <SlideshowContainer>
-        <AnimatePresence mode="wait">
-          <SlideImage
-            key={currentIndex}
-            src={project.images[currentIndex]}
-            alt={`${project.title} - Image ${currentIndex + 1}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </AnimatePresence>
-
+        <SlideImage
+          src={project.images[currentIndex] || project.images[0]}
+          alt={`${project.title} - Image ${currentIndex + 1}`}
+        />
+        
         {project.images.length > 1 && (
-          <>
-            <SlideArrow
-              className="left"
-              onClick={(e) => handlePrevImage(project.id, e)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <FiChevronLeft />
-            </SlideArrow>
-
-            <SlideArrow
-              className="right"
-              onClick={(e) => handleNextImage(project.id, e)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <FiChevronRight />
-            </SlideArrow>
-
-            <SlideNavigation>
-              {project.images.map((_, index) => (
-                <SlideDot
-                  key={index}
-                  $active={index === currentIndex}
-                  onClick={(e) => goToSlide(project.id, index, e)}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                />
-              ))}
-            </SlideNavigation>
-          </>
+          <SlideNavigation>
+            {project.images.map((_, index) => (
+              <SlideDot
+                key={index}
+                $active={index === currentIndex}
+                onClick={(e) => goToSlide(project.id, index, e)}
+              />
+            ))}
+          </SlideNavigation>
         )}
       </SlideshowContainer>
     );
@@ -733,22 +709,33 @@ const Projects = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.01 }}
             onClick={() => setSelectedProject(project)}
           >
             <ProjectMedia>
               <ImageSlideshow project={project} />
-              <PlayButton
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FiPlay />
-              </PlayButton>
+              <MediaOverlay>
+                <PlayButton
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <FiPlay />
+                </PlayButton>
+              </MediaOverlay>
             </ProjectMedia>
 
             <ProjectContent>
               <ProjectTitle>{project.title}</ProjectTitle>
               <ProjectDescription>{project.description}</ProjectDescription>
+              
+              <FeaturesList>
+                <FeatureTitle>Key Features</FeatureTitle>
+                <FeatureGrid>
+                  {project.features.slice(0, 4).map((feature, featureIndex) => (
+                    <FeatureItem key={featureIndex}>{feature}</FeatureItem>
+                  ))}
+                </FeatureGrid>
+              </FeaturesList>
               
               <TechStack>
                 {project.technologies.map((tech, techIndex) => (
@@ -761,8 +748,8 @@ const Projects = () => {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <FiGithub />
@@ -772,8 +759,8 @@ const Projects = () => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <FiExternalLink />
@@ -814,11 +801,11 @@ const Projects = () => {
                 <ProjectDescription>{selectedProject.description}</ProjectDescription>
                 
                 <h4 style={{ color: '#F8FAFC', marginBottom: '1rem' }}>Key Features:</h4>
-                <FeaturesList>
+                <ModalFeaturesList>
                   {selectedProject.features.map((feature, index) => (
-                    <FeatureItem key={index}>{feature}</FeatureItem>
+                    <ModalFeatureItem key={index}>{feature}</ModalFeatureItem>
                   ))}
-                </FeaturesList>
+                </ModalFeaturesList>
 
                 <TechStack>
                   {selectedProject.technologies.map((tech, techIndex) => (
