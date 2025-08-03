@@ -383,97 +383,137 @@ const ModalOverlay = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.98);
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
 `;
 
 const ModalContent = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.cardBackground};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
-  max-width: 1000px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: ${({ theme }) => theme.colors.background};
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 65% 35%;
+  position: relative;
   
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: 1fr;
-    max-width: 90vw;
+    grid-template-rows: 55% 45%;
   }
 `;
 
-const ModalImageSection = styled.div`
+const ModalMediaSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
+  height: 100vh;
   position: relative;
-  background: ${({ theme }) => theme.colors.background};
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+`;
+
+const MediaContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 40px;
+  overflow: hidden;
+`;
+
+const MediaSwitcher = styled.div`
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+`;
+
+const MediaSwitchButton = styled(motion.button)`
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: ${({ $active }) => $active ? '#40E0D0' : 'rgba(255, 255, 255, 0.8)'};
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(64, 224, 208, 0.1);
+    color: #40E0D0;
+    border-color: rgba(64, 224, 208, 0.3);
+  }
+
+  ${({ $active }) => $active && `
+    background: rgba(64, 224, 208, 0.15);
+    border-color: rgba(64, 224, 208, 0.4);
+  `}
+`;
+
+
+
+const ModalSlideImage = styled(motion.img)`
+  max-width: 85%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+`;
+
+const ModalSlideNav = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+`;
+
+const ModalSlideDot = styled(motion.button)`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: ${({ $active, theme }) => $active ? theme.colors.accent : 'rgba(255, 255, 255, 0.4)'};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.accent};
+    transform: scale(1.2);
+  }
 `;
 
 const ModalDetailsSection = styled.div`
-  padding: 2rem;
+  padding: 32px 28px;
   background: ${({ theme }) => theme.colors.cardBackground};
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-left: 1px solid ${({ theme }) => theme.colors.border};
   
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     border-left: none;
     border-top: 1px solid ${({ theme }) => theme.colors.border};
-  }
-`;
-
-const ModalImageContainer = styled.div`
-  position: relative;
-  height: 500px;
-  overflow: hidden;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    height: 300px;
-  }
-`;
-
-const ModalSlideshow = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const ModalSlideImage = styled(motion.img)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const ModalSlideNav = styled.div`
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 0.75rem;
-  z-index: 3;
-`;
-
-const ModalSlideDot = styled(motion.button)`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid ${({ $active, theme }) => $active ? theme.colors.primary : 'rgba(255, 255, 255, 0.7)'};
-  background: ${({ $active, theme }) => $active ? theme.colors.primary : 'transparent'};
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    background: ${({ theme }) => theme.colors.primary};
-    transform: scale(1.2);
+    height: auto;
+    min-height: 45vh;
+    padding: 24px 20px;
   }
 `;
 
@@ -481,11 +521,11 @@ const ModalSlideArrow = styled(motion.button)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   color: white;
   display: flex;
   align-items: center;
@@ -493,33 +533,40 @@ const ModalSlideArrow = styled(motion.button)`
   cursor: pointer;
   z-index: 3;
   font-size: 1.2rem;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.9);
+    background: ${({ theme }) => theme.colors.accent};
+    transform: translateY(-50%) scale(1.05);
   }
 
   &.left {
-    left: 1rem;
+    left: 20px;
   }
 
   &.right {
-    right: 1rem;
+    right: 20px;
   }
 `;
 
 const ModalVideo = styled.video`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 85%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 `;
 
 const CloseButton = styled(motion.button)`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
   border: none;
   border-radius: 50%;
   color: white;
@@ -527,111 +574,137 @@ const CloseButton = styled(motion.button)`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 10;
+  z-index: 10000;
+  font-size: 1.8rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(255, 0, 0, 0.8);
+    transform: scale(1.1);
   }
 `;
 
-const ModalTitle = styled.h2`
-  font-size: 2rem;
+const ModalTitle = styled.h1`
+  font-size: 1.8rem;
   font-weight: 800;
   color: ${({ theme }) => theme.colors.text};
-  margin: 0 0 1rem 0;
+  margin: 0 0 8px 0;
   line-height: 1.2;
+  background: ${({ theme }) => theme.colors.gradientPrimary};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1.6rem;
+  }
 `;
 
 const ModalSubtitle = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  font-size: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 0.85rem;
+  }
 `;
 
 const ModalSection = styled.div`
-  margin-bottom: 2rem;
+  margin: 0;
+  flex-shrink: 0;
 `;
 
 const SectionTitle = styled.h3`
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.accent};
-  margin-bottom: 1rem;
+  margin: 0 0 12px 0;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 `;
 
-const FeaturesList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
+const FeaturesList = styled.div`
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 0 16px 0;
 `;
 
-const FeatureItem = styled.li`
+const FeatureItem = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
-  padding: 0.5rem 0;
+  padding: 6px 0;
   position: relative;
-  padding-left: 1.5rem;
-  font-size: 0.9rem;
-
+  padding-left: 16px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  
   &::before {
-    content: '✓';
+    content: '•';
     position: absolute;
     left: 0;
+    top: 6px;
     color: ${({ theme }) => theme.colors.accent};
     font-weight: bold;
+    font-size: 0.9rem;
   }
 `;
 
 const ModalTechStack = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 6px;
+  margin-bottom: 16px;
 `;
 
 const ModalTechBadge = styled.span`
-  padding: 8px 16px;
+  padding: 4px 10px;
   background: ${({ theme }) => theme.colors.accent}15;
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid ${({ theme }) => theme.colors.accent}30;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  border: 1px solid ${({ theme }) => theme.colors.accent}25;
+  border-radius: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
 `;
 
 const ModalLinks = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  gap: 10px;
 `;
 
 const ModalLink = styled(motion.a)`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 16px 20px;
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  border-radius: 12px;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 24px;
   color: ${({ theme }) => theme.colors.text};
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   transition: all 0.3s ease;
   text-decoration: none;
   background: ${({ theme }) => theme.colors.background};
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
 
   &:hover {
     color: white;
     background: ${({ theme }) => theme.colors.accent};
     border-color: ${({ theme }) => theme.colors.accent};
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
   }
 
   &:first-child:hover {
@@ -642,12 +715,14 @@ const ModalLink = styled(motion.a)`
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showingVideo, setShowingVideo] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  // Reset modal image index when project changes
+  // Reset modal state when project changes
   useEffect(() => {
     if (selectedProject) {
       setModalImageIndex(0);
+      setShowingVideo(false);
     }
   }, [selectedProject]);
 
@@ -665,71 +740,6 @@ const Projects = () => {
 
   const goToModalSlide = (index) => {
     setModalImageIndex(index);
-  };
-
-  const ModalImageSlideshow = () => {
-    if (!selectedProject || selectedProject.images.length === 0) return null;
-
-    if (selectedProject.images.length === 1) {
-      return (
-        <ModalImageContainer>
-          <ModalSlideImage
-            src={selectedProject.images[0]}
-            alt={selectedProject.title}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          />
-        </ModalImageContainer>
-      );
-    }
-
-    return (
-      <ModalImageContainer>
-        <ModalSlideshow>
-          <AnimatePresence mode="wait">
-            <ModalSlideImage
-              key={modalImageIndex}
-              src={selectedProject.images[modalImageIndex]}
-              alt={`${selectedProject.title} - Image ${modalImageIndex + 1}`}
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-            />
-          </AnimatePresence>
-
-          <ModalSlideArrow
-            className="left"
-            onClick={handleModalPrevImage}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <FiChevronLeft />
-          </ModalSlideArrow>
-
-          <ModalSlideArrow
-            className="right"
-            onClick={handleModalNextImage}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <FiChevronRight />
-          </ModalSlideArrow>
-
-          <ModalSlideNav>
-            {selectedProject.images.map((_, index) => (
-              <ModalSlideDot
-                key={index}
-                $active={index === modalImageIndex}
-                onClick={() => goToModalSlide(index)}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-              />
-            ))}
-          </ModalSlideNav>
-        </ModalSlideshow>
-      </ModalImageContainer>
-    );
   };
 
   return (
@@ -801,53 +811,135 @@ const Projects = () => {
                 <FiX />
               </CloseButton>
               
-              <ModalImageSection>
-                <ModalImageSlideshow />
-              </ModalImageSection>
+              <ModalMediaSection>
+                <MediaSwitcher>
+                  <MediaSwitchButton
+                    $active={!showingVideo}
+                    onClick={() => setShowingVideo(false)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Images
+                  </MediaSwitchButton>
+                  <MediaSwitchButton
+                    $active={showingVideo}
+                    onClick={() => setShowingVideo(true)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Video
+                  </MediaSwitchButton>
+                </MediaSwitcher>
+
+                <MediaContainer>
+                  {!showingVideo ? (
+                    // Images
+                    selectedProject.images.length === 1 ? (
+                      <ModalSlideImage
+                        src={selectedProject.images[0]}
+                        alt={selectedProject.title}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      />
+                    ) : (
+                      <>
+                        <AnimatePresence mode="wait">
+                          <ModalSlideImage
+                            key={modalImageIndex}
+                            src={selectedProject.images[modalImageIndex]}
+                            alt={`${selectedProject.title} - Image ${modalImageIndex + 1}`}
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.25 }}
+                          />
+                        </AnimatePresence>
+
+                        <ModalSlideArrow
+                          className="left"
+                          onClick={handleModalPrevImage}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FiChevronLeft />
+                        </ModalSlideArrow>
+
+                        <ModalSlideArrow
+                          className="right"
+                          onClick={handleModalNextImage}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <FiChevronRight />
+                        </ModalSlideArrow>
+
+                        <ModalSlideNav>
+                          {selectedProject.images.map((_, index) => (
+                            <ModalSlideDot
+                              key={index}
+                              $active={index === modalImageIndex}
+                              onClick={() => goToModalSlide(index)}
+                              whileHover={{ scale: 1.2 }}
+                              whileTap={{ scale: 0.9 }}
+                            />
+                          ))}
+                        </ModalSlideNav>
+                      </>
+                    )
+                  ) : (
+                    // Video
+                    <ModalVideo
+                      src={selectedProject.video}
+                      controls
+                      autoPlay
+                      muted
+                    />
+                  )}
+                </MediaContainer>
+              </ModalMediaSection>
               
               <ModalDetailsSection>
-                <ModalTitle>{selectedProject.title}</ModalTitle>
-                <ModalSubtitle>{selectedProject.description}</ModalSubtitle>
+                <div>
+                  <ModalTitle>{selectedProject.title}</ModalTitle>
+                  <ModalSubtitle>{selectedProject.description}</ModalSubtitle>
+                </div>
                 
-                <ModalSection>
+                <div>
                   <SectionTitle>Key Features</SectionTitle>
                   <FeaturesList>
-                    {selectedProject.features.map((feature, index) => (
+                    {selectedProject.features.slice(0, 6).map((feature, index) => (
                       <FeatureItem key={index}>{feature}</FeatureItem>
                     ))}
                   </FeaturesList>
-                </ModalSection>
+                </div>
 
-                <ModalSection>
-                  <SectionTitle>Technology Stack</SectionTitle>
+                <div>
+                  <SectionTitle>Tech Stack</SectionTitle>
                   <ModalTechStack>
                     {selectedProject.technologies.map((tech, techIndex) => (
                       <ModalTechBadge key={techIndex}>{tech}</ModalTechBadge>
                     ))}
                   </ModalTechStack>
-                </ModalSection>
+                </div>
 
-                <ModalSection>
-                  <SectionTitle>Links</SectionTitle>
-                  <ModalLinks>
-                    <ModalLink
-                      href={selectedProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FiGithub />
-                      View Source Code
-                    </ModalLink>
-                    <ModalLink
-                      href={selectedProject.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <FiExternalLink />
-                      Live Demo
-                    </ModalLink>
-                  </ModalLinks>
-                </ModalSection>
+                <ModalLinks>
+                  <ModalLink
+                    href={selectedProject.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FiGithub />
+                    View Code
+                  </ModalLink>
+                  <ModalLink
+                    href={selectedProject.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FiExternalLink />
+                    Live Demo
+                  </ModalLink>
+                </ModalLinks>
               </ModalDetailsSection>
             </ModalContent>
           </ModalOverlay>
