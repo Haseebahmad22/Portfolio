@@ -130,59 +130,46 @@ const PageSubtitle = styled.p`
 
 const ProjectsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 4rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
+    margin-top: 3rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
     margin-top: 2rem;
+    gap: 1rem;
   }
 `;
 
 const ProjectCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.cardBackground};
-  backdrop-filter: blur(20px);
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
   height: fit-content;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-4px);
-    border-color: ${({ theme }) => theme.colors.borderHover};
-    box-shadow: ${({ theme }) => theme.shadows.glowHover};
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: ${({ theme }) => theme.colors.gradientPrimary};
-    opacity: 0.02;
-    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: ${({ theme }) => theme.colors.accent}40;
   }
 `;
 
 const ProjectMedia = styled.div`
-  height: 250px;
+  height: 200px;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const ProjectImage = styled.img`
@@ -192,7 +179,7 @@ const ProjectImage = styled.img`
   transition: transform 0.3s ease;
 
   ${ProjectCard}:hover & {
-    transform: scale(1.02);
+    transform: scale(1.05);
   }
 `;
 
@@ -203,20 +190,28 @@ const MediaOverlay = styled.div`
   right: 0;
   bottom: 0;
   background: linear-gradient(
-    to bottom,
+    135deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.3) 100%
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.6) 100%
   );
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1rem;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.4s ease;
 
   ${ProjectCard}:hover & {
     opacity: 1;
   }
+`;
+
+const MediaActions = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 `;
 
 const SlideshowContainer = styled.div`
@@ -226,6 +221,8 @@ const SlideshowContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
 `;
 
 const SlideImage = styled(motion.img)`
@@ -239,51 +236,106 @@ const SlideImage = styled(motion.img)`
 
 const SlideNavigation = styled.div`
   position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 16px;
+  left: 16px;
   display: flex;
   gap: 6px;
   z-index: 3;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 4px 8px;
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
-const SlideDot = styled(motion.button)`
+const SlideDot = styled(motion.div)`
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  border: none;
-  background: ${({ $active, theme }) => $active ? theme.colors.accent : 'rgba(255, 255, 255, 0.6)'};
-  cursor: pointer;
+  background: ${({ $active, theme }) => 
+    $active ? theme.colors.accent : 'rgba(255, 255, 255, 0.4)'};
   transition: all 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background: ${({ theme }) => theme.colors.accent};
+    transform: scale(1.2);
+  }
+`;
+
+const SlideCounter = styled.div`
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
 const PlayButton = styled(motion.div)`
-  width: 48px;
-  height: 48px;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  width: 56px;
+  height: 56px;
+  background: ${({ theme }) => theme.colors.accent};
+  backdrop-filter: blur(20px);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 1.2rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.25rem;
   cursor: pointer;
   z-index: 4;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accent};
-    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.primary};
     transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  svg {
+    margin-left: 2px; /* Optical alignment for play icon */
+  }
+`;
+
+const ViewButton = styled(motion.div)`
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
   }
 `;
 
@@ -292,106 +344,37 @@ const ProjectContent = styled.div`
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
 `;
 
 const ProjectDescription = styled.p`
-  color: ${({ theme }) => theme.colors.textMuted};
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
   font-size: 0.9rem;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-`;
-
-const FeaturesList = styled.div`
-  margin-bottom: 1.25rem;
-`;
-
-const FeatureTitle = styled.h4`
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.accent};
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`;
-
-const FeatureGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.25rem;
-`;
-
-const FeatureItem = styled.div`
-  font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  padding: 0.25rem 0;
-  position: relative;
-  padding-left: 1rem;
-
-  &::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: ${({ theme }) => theme.colors.accent};
-    font-weight: bold;
-  }
 `;
 
 const TechStack = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1.25rem;
+  gap: 0.5rem;
 `;
 
 const TechBadge = styled.span`
-  padding: 0.2rem 0.6rem;
-  background: rgba(99, 102, 241, 0.1);
+  padding: 4px 8px;
+  background: ${({ theme }) => theme.colors.accent}15;
   color: ${({ theme }) => theme.colors.accent};
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  border-radius: 12px;
   font-size: 0.7rem;
   font-weight: 500;
-`;
-
-const ProjectLinks = styled.div`
-  display: flex;
-  gap: 0.75rem;
-`;
-
-const ProjectLink = styled(motion.a)`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  flex: 1;
-  justify-content: center;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-    border-color: ${({ theme }) => theme.colors.accent};
-    background: rgba(99, 102, 241, 0.05);
-    transform: translateY(-1px);
-  }
-
-  svg {
-    width: 14px;
-    height: 14px;
-  }
 `;
 
 const ModalOverlay = styled(motion.div)`
@@ -410,21 +393,47 @@ const ModalOverlay = styled(motion.div)`
 `;
 
 const ModalContent = styled(motion.div)`
-  background: ${({ theme }) => theme.colors.secondary};
+  background: ${({ theme }) => theme.colors.cardBackground};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']};
-  max-width: 900px;
+  border-radius: 16px;
+  max-width: 1000px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    max-width: 90vw;
+  }
+`;
+
+const ModalImageSection = styled.div`
+  position: relative;
+  background: ${({ theme }) => theme.colors.background};
+`;
+
+const ModalDetailsSection = styled.div`
+  padding: 2rem;
+  background: ${({ theme }) => theme.colors.cardBackground};
+  border-left: 1px solid ${({ theme }) => theme.colors.border};
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    border-left: none;
+    border-top: 1px solid ${({ theme }) => theme.colors.border};
+  }
 `;
 
 const ModalImageContainer = styled.div`
   position: relative;
-  height: 400px;
+  height: 500px;
   overflow: hidden;
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']} ${({ theme }) => theme.borderRadius['2xl']} 0 0;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: 300px;
+  }
 `;
 
 const ModalSlideshow = styled.div`
@@ -500,9 +509,8 @@ const ModalSlideArrow = styled(motion.button)`
 
 const ModalVideo = styled.video`
   width: 100%;
-  height: 400px;
+  height: 100%;
   object-fit: cover;
-  border-radius: ${({ theme }) => theme.borderRadius['2xl']} ${({ theme }) => theme.borderRadius['2xl']} 0 0;
 `;
 
 const CloseButton = styled(motion.button)`
@@ -526,23 +534,48 @@ const CloseButton = styled(motion.button)`
   }
 `;
 
-const ModalDetails = styled.div`
-  padding: 2rem;
+const ModalTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: 800;
+  color: ${({ theme }) => theme.colors.text};
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
 `;
 
-const ModalFeaturesList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0.5rem;
-  margin: 1.5rem 0;
+const ModalSubtitle = styled.p`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+`;
+
+const ModalSection = styled.div`
+  margin-bottom: 2rem;
+`;
+
+const SectionTitle = styled.h3`
+  font-size: 1rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.accent};
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`;
+
+const FeaturesList = styled.ul`
   list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
 `;
 
-const ModalFeatureItem = styled.li`
+const FeatureItem = styled.li`
   color: ${({ theme }) => theme.colors.textSecondary};
   padding: 0.5rem 0;
   position: relative;
   padding-left: 1.5rem;
+  font-size: 0.9rem;
 
   &::before {
     content: '✓';
@@ -553,19 +586,63 @@ const ModalFeatureItem = styled.li`
   }
 `;
 
+const ModalTechStack = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+`;
+
+const ModalTechBadge = styled.span`
+  padding: 8px 16px;
+  background: ${({ theme }) => theme.colors.accent}15;
+  color: ${({ theme }) => theme.colors.accent};
+  border: 1px solid ${({ theme }) => theme.colors.accent}30;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+`;
+
+const ModalLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const ModalLink = styled(motion.a)`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 16px 20px;
+  border: 2px solid ${({ theme }) => theme.colors.border};
+  border-radius: 12px;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: ${({ theme }) => theme.colors.background};
+
+  &:hover {
+    color: white;
+    background: ${({ theme }) => theme.colors.accent};
+    border-color: ${({ theme }) => theme.colors.accent};
+    transform: translateY(-2px);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:first-child:hover {
+    background: #24292e;
+    border-color: #24292e;
+  }
+`;
+
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [modalImageIndex, setModalImageIndex] = useState(0);
-
-  // Initialize image indices for all projects
-  useEffect(() => {
-    const initialIndices = {};
-    projects.forEach(project => {
-      initialIndices[project.id] = 0;
-    });
-    setCurrentImageIndex(initialIndices);
-  }, []);
 
   // Reset modal image index when project changes
   useEffect(() => {
@@ -573,14 +650,6 @@ const Projects = () => {
       setModalImageIndex(0);
     }
   }, [selectedProject]);
-
-  const goToSlide = (projectId, index, e) => {
-    e.stopPropagation();
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [projectId]: index
-    }));
-  };
 
   const handleModalPrevImage = () => {
     setModalImageIndex(prev => 
@@ -596,31 +665,6 @@ const Projects = () => {
 
   const goToModalSlide = (index) => {
     setModalImageIndex(index);
-  };
-
-  const ImageSlideshow = ({ project }) => {
-    const currentIndex = currentImageIndex[project.id] || 0;
-    
-    return (
-      <SlideshowContainer>
-        <SlideImage
-          src={project.images[currentIndex] || project.images[0]}
-          alt={`${project.title} - Image ${currentIndex + 1}`}
-        />
-        
-        {project.images.length > 1 && (
-          <SlideNavigation>
-            {project.images.map((_, index) => (
-              <SlideDot
-                key={index}
-                $active={index === currentIndex}
-                onClick={(e) => goToSlide(project.id, index, e)}
-              />
-            ))}
-          </SlideNavigation>
-        )}
-      </SlideshowContainer>
-    );
   };
 
   const ModalImageSlideshow = () => {
@@ -709,64 +753,27 @@ const Projects = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.01 }}
             onClick={() => setSelectedProject(project)}
           >
             <ProjectMedia>
-              <ImageSlideshow project={project} />
-              <MediaOverlay>
-                <PlayButton
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <FiPlay />
-                </PlayButton>
-              </MediaOverlay>
+              <ProjectImage 
+                src={project.images[0]} 
+                alt={project.title}
+              />
             </ProjectMedia>
 
             <ProjectContent>
               <ProjectTitle>{project.title}</ProjectTitle>
               <ProjectDescription>{project.description}</ProjectDescription>
               
-              <FeaturesList>
-                <FeatureTitle>Key Features</FeatureTitle>
-                <FeatureGrid>
-                  {project.features.slice(0, 4).map((feature, featureIndex) => (
-                    <FeatureItem key={featureIndex}>{feature}</FeatureItem>
-                  ))}
-                </FeatureGrid>
-              </FeaturesList>
-              
               <TechStack>
-                {project.technologies.map((tech, techIndex) => (
+                {project.technologies.slice(0, 3).map((tech, techIndex) => (
                   <TechBadge key={techIndex}>{tech}</TechBadge>
                 ))}
+                {project.technologies.length > 3 && (
+                  <TechBadge>+{project.technologies.length - 3}</TechBadge>
+                )}
               </TechStack>
-
-              <ProjectLinks>
-                <ProjectLink
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FiGithub />
-                  Code
-                </ProjectLink>
-                <ProjectLink
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FiExternalLink />
-                  Live Demo
-                </ProjectLink>
-              </ProjectLinks>
             </ProjectContent>
           </ProjectCard>
         ))}
@@ -794,44 +801,54 @@ const Projects = () => {
                 <FiX />
               </CloseButton>
               
-              <ModalImageSlideshow />
+              <ModalImageSection>
+                <ModalImageSlideshow />
+              </ModalImageSection>
               
-              <ModalDetails>
-                <ProjectTitle>{selectedProject.title}</ProjectTitle>
-                <ProjectDescription>{selectedProject.description}</ProjectDescription>
+              <ModalDetailsSection>
+                <ModalTitle>{selectedProject.title}</ModalTitle>
+                <ModalSubtitle>{selectedProject.description}</ModalSubtitle>
                 
-                <h4 style={{ color: '#F8FAFC', marginBottom: '1rem' }}>Key Features:</h4>
-                <ModalFeaturesList>
-                  {selectedProject.features.map((feature, index) => (
-                    <ModalFeatureItem key={index}>{feature}</ModalFeatureItem>
-                  ))}
-                </ModalFeaturesList>
+                <ModalSection>
+                  <SectionTitle>Key Features</SectionTitle>
+                  <FeaturesList>
+                    {selectedProject.features.map((feature, index) => (
+                      <FeatureItem key={index}>{feature}</FeatureItem>
+                    ))}
+                  </FeaturesList>
+                </ModalSection>
 
-                <TechStack>
-                  {selectedProject.technologies.map((tech, techIndex) => (
-                    <TechBadge key={techIndex}>{tech}</TechBadge>
-                  ))}
-                </TechStack>
+                <ModalSection>
+                  <SectionTitle>Technology Stack</SectionTitle>
+                  <ModalTechStack>
+                    {selectedProject.technologies.map((tech, techIndex) => (
+                      <ModalTechBadge key={techIndex}>{tech}</ModalTechBadge>
+                    ))}
+                  </ModalTechStack>
+                </ModalSection>
 
-                <ProjectLinks>
-                  <ProjectLink
-                    href={selectedProject.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FiGithub />
-                    View Code
-                  </ProjectLink>
-                  <ProjectLink
-                    href={selectedProject.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FiExternalLink />
-                    Live Demo
-                  </ProjectLink>
-                </ProjectLinks>
-              </ModalDetails>
+                <ModalSection>
+                  <SectionTitle>Links</SectionTitle>
+                  <ModalLinks>
+                    <ModalLink
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FiGithub />
+                      View Source Code
+                    </ModalLink>
+                    <ModalLink
+                      href={selectedProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FiExternalLink />
+                      Live Demo
+                    </ModalLink>
+                  </ModalLinks>
+                </ModalSection>
+              </ModalDetailsSection>
             </ModalContent>
           </ModalOverlay>
         )}
