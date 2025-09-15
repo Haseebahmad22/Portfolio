@@ -231,7 +231,7 @@ const ProfileName = styled.h3`
   color: transparent;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.heading.h4};
+    font-size: ${typography.mobile.h4};
     margin-bottom: 0.25rem;
   }
 `;
@@ -337,7 +337,7 @@ const SectionTitle = styled.h3`
   gap: 0.75rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.heading.h5};
+    font-size: ${typography.mobile.h5};
     margin-bottom: 1rem;
     gap: 0.5rem;
   }
@@ -452,7 +452,7 @@ const SkillsTitle = styled.h3`
   gap: 0.75rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.heading.h5};
+    font-size: ${typography.mobile.h5};
     margin-bottom: 1.5rem;
     gap: 0.5rem;
   }
@@ -697,7 +697,7 @@ const StatNumber = styled.h4`
   line-height: 1;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.heading.h4};
+    font-size: ${typography.mobile.h4};
     margin-bottom: 0.25rem;
   }
 `;

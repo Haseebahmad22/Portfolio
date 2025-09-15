@@ -280,7 +280,7 @@ const StatItem = styled(motion.div)`
     margin-bottom: 0.25rem;
 
     ${media.mobile} {
-      font-size: ${typography.mobile.heading.h4};
+      font-size: ${typography.mobile.h4};
     }
   }
   

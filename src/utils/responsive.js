@@ -71,6 +71,8 @@ export const typography = {
     h2: 'clamp(1.5rem, 6vw, 2rem)',
     h3: 'clamp(1.25rem, 5vw, 1.75rem)',
     h4: 'clamp(1.125rem, 4vw, 1.5rem)',
+    h5: 'clamp(1rem, 3.5vw, 1.25rem)',
+    h6: 'clamp(0.875rem, 3vw, 1.125rem)',
     body: 'clamp(0.875rem, 4vw, 1rem)',
     small: 'clamp(0.75rem, 3vw, 0.875rem)'
   },
@@ -79,6 +81,8 @@ export const typography = {
     h2: 'clamp(1.75rem, 5vw, 2.25rem)',
     h3: 'clamp(1.5rem, 4vw, 2rem)',
     h4: 'clamp(1.25rem, 3vw, 1.75rem)',
+    h5: 'clamp(1.125rem, 2.5vw, 1.5rem)',
+    h6: 'clamp(1rem, 2vw, 1.25rem)',
     body: 'clamp(1rem, 2.5vw, 1.125rem)',
     small: 'clamp(0.875rem, 2vw, 1rem)'
   },
@@ -87,6 +91,8 @@ export const typography = {
     h2: 'clamp(2rem, 3vw, 2.5rem)',
     h3: 'clamp(1.75rem, 2.5vw, 2rem)',
     h4: 'clamp(1.5rem, 2vw, 1.75rem)',
+    h5: 'clamp(1.25rem, 1.5vw, 1.5rem)',
+    h6: 'clamp(1.125rem, 1vw, 1.25rem)',
     body: '1.125rem',
     small: '1rem'
   }
