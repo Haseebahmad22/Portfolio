@@ -276,7 +276,7 @@ const ErrorTitle = styled.h1`
   margin-bottom: 1rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.heading.h3};
+    font-size: ${typography.mobile.h3};
     margin-bottom: 0.75rem;
   }
 `;

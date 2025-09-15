@@ -35,6 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "vercel-build": "react-scripts build",
     "build:analyze": "npm run build && npx react-scripts build --analyze",
     "build:profile": "npm run build -- --profile",
     "test": "react-scripts test",
