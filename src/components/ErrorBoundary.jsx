@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FiAlertTriangle, FiRefreshCw, FiHome, FiMail } from 'react-icons/fi';
 import { media, typography } from '../utils/responsive';
 
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
