@@ -277,7 +277,7 @@ const ErrorTitle = styled.h1`
   margin-bottom: 1rem;
 
   ${media.mobile} {
-    font-size: ${() => typography?.mobile?.h3 || 'clamp(1.25rem, 5vw, 1.75rem)'};
+    font-size: ${typography?.mobile?.h3 || 'clamp(1.25rem, 5vw, 1.75rem)'};
     margin-bottom: 0.75rem;
   }
 `;
