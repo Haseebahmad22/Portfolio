@@ -276,7 +276,7 @@ const ErrorTitle = styled.h1`
   margin-bottom: 1rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.h3};
+    font-size: ${() => typography?.mobile?.h3 || 'clamp(1.25rem, 5vw, 1.75rem)'};
     margin-bottom: 0.75rem;
   }
 `;
@@ -288,7 +288,7 @@ const ErrorMessage = styled.p`
   margin-bottom: 2rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.base};
+    font-size: ${typography?.mobile?.body || '1rem'};
     line-height: 1.5;
     margin-bottom: 1.5rem;
   }
@@ -317,7 +317,7 @@ const DetailsTitle = styled.h3`
   margin-bottom: 1rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.large};
+    font-size: ${typography?.mobile?.body || '1rem'};
     margin-bottom: 0.75rem;
   }
 `;
@@ -332,7 +332,7 @@ const ErrorId = styled.div`
   margin-bottom: 1rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.small};
+    font-size: ${typography?.mobile?.small || '0.875rem'};
     padding: 0.4rem;
   }
 `;
@@ -348,7 +348,7 @@ const ErrorText = styled.div`
   word-break: break-word;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.small};
+    font-size: ${typography?.mobile?.small || '0.875rem'};
     padding: 0.75rem;
   }
 `;
@@ -404,7 +404,7 @@ const ActionButton = styled(motion.button)`
 
   ${media.mobile} {
     padding: 0.75rem 1.5rem;
-    font-size: ${typography.mobile.body.small};
+    font-size: ${typography?.mobile?.small || '0.875rem'};
     gap: 0.4rem;
   }
 
@@ -429,7 +429,7 @@ const FooterText = styled.p`
   margin: 0;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.small};
+    font-size: ${typography?.mobile?.small || '0.875rem'};
   }
 
   strong {
