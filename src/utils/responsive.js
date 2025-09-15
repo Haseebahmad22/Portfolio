@@ -173,19 +173,3 @@ export const safeArea = {
   left: 'env(safe-area-inset-left)'
 };
 
-export default {
-  breakpoints,
-  media,
-  containers,
-  spacing,
-  typography,
-  touch,
-  animations,
-  zIndex,
-  rem,
-  em,
-  responsive,
-  grid,
-  flex,
-  safeArea
-};
