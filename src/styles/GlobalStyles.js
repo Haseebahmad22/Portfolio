@@ -2,32 +2,48 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
   :root {
-    /* Default theme values (will be overridden by ThemeContext) */
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #1a1a1a;
-    --bg-tertiary: #2a2a2a;
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --text-muted: #666666;
-    --accent-primary: #00d4ff;
-    --accent-secondary: #ff6b9d;
-    --border-color: #333333;
-    --shadow-light: rgba(255, 255, 255, 0.1);
-    --shadow-dark: rgba(0, 0, 0, 0.5);
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    /* Light mode (default) */
+    --bg-primary: #f9fafb;
+    --bg-secondary: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --accent-primary: #6366f1;
+    --accent-hover: #4f46e5;
+    --accent-secondary: #8b5cf6;
+    --border: #e5e7eb;
+    --border-hover: #d1d5db;
+    --card-bg: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.12);
     
-    /* Animation variables */
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --transition-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Dark mode overrides */
+    @media (prefers-color-scheme: dark) {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #334155;
+      --border-hover: #475569;
+      --card-bg: #1e293b;
+      --shadow: rgba(0, 0, 0, 0.25);
+      --shadow-hover: rgba(0, 0, 0, 0.35);
+    }
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    --gradient-accent: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    
+    /* Transitions */
+    --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * {
@@ -61,41 +77,7 @@ export const GlobalStyles = createGlobalStyle`
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
-    /* Enhanced cursor background effect */
-    &::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-          rgba(79, 172, 254, 0.08) 0%, 
-          rgba(79, 172, 254, 0.04) 40%, 
-          transparent 80%);
-      pointer-events: none;
-      z-index: 1;
-      transition: opacity 0.3s var(--transition-smooth);
-      opacity: 0.6;
-    }
-    
-    /* Background grain texture */
-    &::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
-      background-size: 20px 20px;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.03;
-    }
+    transition: background-color var(--transition-normal), color var(--transition-normal);
   }
 
   /* Enhanced focus management */
@@ -133,30 +115,24 @@ export const GlobalStyles = createGlobalStyle`
     background: transparent;
   }
 
-  /* Enhanced scrollbar */
+  /* Clean scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-    border-radius: 4px;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--gradient-accent);
-    border-radius: 4px;
-    transition: all 0.3s var(--transition-smooth);
+    background: var(--accent-primary);
+    border-radius: 3px;
+    transition: background var(--transition-fast);
     
     &:hover {
-      background: var(--accent-primary);
-      transform: scale(1.1);
+      background: var(--accent-hover);
     }
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: var(--bg-secondary);
   }
 
   /* Enhanced selection styles */
@@ -179,13 +155,14 @@ export const GlobalStyles = createGlobalStyle`
     border-radius: 4px;
   }
 
-  /* Enhanced typography */
+  /* Clean typography */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.02em;
     margin: 0;
+    color: var(--text-primary);
   }
 
   h1 {
@@ -211,52 +188,44 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-family: 'Fira Code', monospace;
     font-size: 0.9em;
-    background: var(--glass-bg);
+    background: rgba(99, 102, 241, 0.1);
     padding: 0.2em 0.4em;
-    border-radius: 4px;
-    border: 1px solid var(--glass-border);
+    border-radius: 0.375rem;
+    border: 1px solid var(--border);
   }
 
-  /* Enhanced utility classes */
-  .glass-effect {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s var(--transition-smooth);
+  /* Modern utility classes */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px var(--shadow);
+    transition: all var(--transition-normal);
     
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 
-        0 16px 40px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      border-color: var(--accent-primary);
+      box-shadow: 0 8px 25px var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    transition: all var(--transition-normal);
+    
+    &:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
     }
   }
 
   .text-gradient {
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-  }
-
-  .text-gradient-primary {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     background-clip: text;
@@ -264,33 +233,52 @@ export const GlobalStyles = createGlobalStyle`
     display: inline-block;
   }
 
-  .text-gradient-secondary {
-    background: var(--gradient-secondary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-  }
-
   .glow-effect {
-    box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
-    transition: box-shadow 0.3s var(--transition-smooth);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    transition: box-shadow var(--transition-normal);
     
     &:hover {
-      box-shadow: 0 0 40px rgba(79, 172, 254, 0.5);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
     }
   }
 
-  .glow-text {
-    text-shadow: 0 0 20px var(--accent-primary);
-    transition: text-shadow 0.3s var(--transition-smooth);
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
     
     &:hover {
-      text-shadow: 0 0 30px var(--accent-primary);
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    &.btn-outline {
+      background: transparent;
+      color: var(--accent-primary);
+      border: 2px solid var(--accent-primary);
+      
+      &:hover {
+        background: var(--accent-primary);
+        color: white;
+      }
     }
   }
 
-  /* Enhanced animations */
+  /* Subtle animations */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -305,7 +293,7 @@ export const GlobalStyles = createGlobalStyle`
   @keyframes slideUp {
     from {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -316,7 +304,7 @@ export const GlobalStyles = createGlobalStyle`
   @keyframes slideInLeft {
     from {
       opacity: 0;
-      transform: translateX(-40px);
+      transform: translateX(-30px);
     }
     to {
       opacity: 1;
@@ -327,7 +315,7 @@ export const GlobalStyles = createGlobalStyle`
   @keyframes slideInRight {
     from {
       opacity: 0;
-      transform: translateX(40px);
+      transform: translateX(30px);
     }
     to {
       opacity: 1;
@@ -338,7 +326,7 @@ export const GlobalStyles = createGlobalStyle`
   @keyframes scaleIn {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.95);
     }
     to {
       opacity: 1;
@@ -346,85 +334,25 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes bounce {
-    0%, 20%, 53%, 80%, 100% {
-      transform: translate3d(0, 0, 0);
-    }
-    40%, 43% {
-      transform: translate3d(0, -30px, 0);
-    }
-    70% {
-      transform: translate3d(0, -15px, 0);
-    }
-    90% {
-      transform: translate3d(0, -4px, 0);
-    }
-  }
-
-  /* Animation classes */
+  /* Animation utility classes */
   .fade-in {
-    animation: fadeIn 0.6s var(--transition-smooth) forwards;
+    animation: fadeIn 0.6s var(--transition-normal) forwards;
   }
 
   .slide-up {
-    animation: slideUp 0.6s var(--transition-smooth) forwards;
+    animation: slideUp 0.6s var(--transition-normal) forwards;
   }
 
   .slide-in-left {
-    animation: slideInLeft 0.6s var(--transition-smooth) forwards;
+    animation: slideInLeft 0.6s var(--transition-normal) forwards;
   }
 
   .slide-in-right {
-    animation: slideInRight 0.6s var(--transition-smooth) forwards;
+    animation: slideInRight 0.6s var(--transition-normal) forwards;
   }
 
   .scale-in {
-    animation: scaleIn 0.4s var(--transition-bounce) forwards;
-  }
-
-  .pulse {
-    animation: pulse 2s var(--transition-smooth) infinite;
-  }
-
-  .float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .spin {
-    animation: spin 1s linear infinite;
-  }
-
-  .bounce {
-    animation: bounce 2s infinite;
+    animation: scaleIn 0.4s var(--transition-normal) forwards;
   }
 
   /* Loading states */

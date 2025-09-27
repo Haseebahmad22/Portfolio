@@ -21,45 +21,60 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    // Generate a unique error ID for tracking
-    const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
-    this.setState({
-      error,
-      errorInfo,
-      errorId
-    });
+    try {
+      // Generate a unique error ID for tracking
+      const errorId = `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      this.setState({
+        error,
+        errorInfo,
+        errorId
+      });
 
-    // Log error to console in development
-    if (process.env.NODE_ENV === 'development') {
-      console.group('🚨 Error Boundary Caught Error');
-      console.error('Error:', error);
-      console.error('Error Info:', errorInfo);
-      console.error('Error ID:', errorId);
-      console.groupEnd();
-    }
+      // Log error to console in development
+      if (process.env.NODE_ENV === 'development') {
+        console.group('🚨 Error Boundary Caught Error');
+        console.error('Error:', error);
+        console.error('Error Info:', errorInfo);
+        console.error('Error ID:', errorId);
+        console.groupEnd();
+      }
 
-    // In production, you could send this to an error reporting service
-    // Example: Sentry, LogRocket, etc.
-    if (process.env.NODE_ENV === 'production') {
-      this.reportError(error, errorInfo, errorId);
+      // In production, you could send this to an error reporting service
+      // Example: Sentry, LogRocket, etc.
+      if (process.env.NODE_ENV === 'production') {
+        this.reportError(error, errorInfo, errorId);
+      }
+    } catch (handlingError) {
+      console.error('Error in componentDidCatch:', handlingError);
+      // Fallback state in case of error handling failure
+      this.setState({
+        hasError: true,
+        error: new Error('Error boundary failed'),
+        errorInfo: { componentStack: 'Error boundary handling failed' },
+        errorId: 'FALLBACK_ERROR'
+      });
     }
   }
 
   reportError = (error, errorInfo, errorId) => {
-    // Example error reporting (implement with your preferred service)
-    const errorReport = {
-      id: errorId,
-      message: error.message,
-      stack: error.stack,
-      componentStack: errorInfo.componentStack,
-      timestamp: new Date().toISOString(),
-      userAgent: navigator.userAgent,
-      url: window.location.href
-    };
+    try {
+      // Example error reporting (implement with your preferred service)
+      const errorReport = {
+        id: errorId || 'unknown',
+        message: error?.message || 'Unknown error',
+        stack: error?.stack || 'No stack trace',
+        componentStack: errorInfo?.componentStack || 'No component stack',
+        timestamp: new Date().toISOString(),
+        userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
+        url: typeof window !== 'undefined' ? window.location.href : 'Unknown'
+      };
 
-    // Send to error reporting service
-    console.log('Error Report:', errorReport);
+      // Send to error reporting service
+      console.log('Error Report:', errorReport);
+    } catch (reportingError) {
+      console.error('Failed to create error report:', reportingError);
+    }
   };
 
   handleRefresh = () => {

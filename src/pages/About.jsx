@@ -99,7 +99,7 @@ const AboutSubtitle = styled.h2`
   line-height: 1.6;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.large};
+    font-size: ${typography.mobile.body};
     line-height: 1.5;
     padding: 0 0.5rem;
   }
@@ -244,7 +244,7 @@ const ProfileRole = styled.p`
   font-weight: 500;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.base};
+    font-size: ${typography.mobile.body};
     margin-bottom: 1rem;
   }
 `;
@@ -269,7 +269,7 @@ const ProfileDetail = styled.div`
   border-bottom: 1px solid var(--border-secondary);
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.small};
+      font-size: ${typography.mobile.body};
     gap: 0.5rem;
     padding: 0.4rem 0;
     ${touch.target}
@@ -368,7 +368,7 @@ const StoryText = styled.div`
     margin: 0;
 
     ${media.mobile} {
-      font-size: ${typography.mobile.body.base};
+      font-size: ${typography.mobile.body};
       line-height: 1.6;
     }
   }
@@ -382,7 +382,7 @@ const StoryText = styled.div`
 
     ${media.mobile} {
       padding: 0.15rem 0.4rem;
-      font-size: ${typography.mobile.body.small};
+      font-size: ${typography.mobile.small};
     }
   }
 
@@ -530,7 +530,7 @@ const SkillItem = styled(motion.div)`
     z-index: 1;
 
     ${media.mobile} {
-      font-size: ${typography.mobile.body.small};
+      font-size: ${typography.mobile.small};
     }
   }
 `;
@@ -602,7 +602,7 @@ const InterestItem = styled(motion.div)`
     font-size: clamp(0.9rem, 2.5vw, 1rem);
 
     ${media.mobile} {
-      font-size: ${typography.mobile.body.small};
+      font-size: ${typography.mobile.small};
     }
   }
 `;
@@ -709,7 +709,7 @@ const StatLabel = styled.p`
   margin: 0;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.small};
+    font-size: ${typography.mobile.small};
   }
 `;
 

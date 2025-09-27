@@ -62,7 +62,7 @@ const ContactSubtitle = styled.p`
   line-height: 1.6;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.large};
+    font-size: ${typography.mobile.body};
     line-height: 1.5;
     padding: 0 0.5rem;
     margin-bottom: 1.5rem;
@@ -658,7 +658,9 @@ const Contact = () => {
               </IconWrapper>
               <InfoText>
                 <h4>Email</h4>
-                <p>haseebahmad.dev@gmail.com</p>
+                <p>
+                  <a href="mailto:haseebahmad321csgo@gmail.com">haseebahmad321csgo@gmail.com</a>
+                </p>
               </InfoText>
             </InfoItem>
 
@@ -668,7 +670,9 @@ const Contact = () => {
               </IconWrapper>
               <InfoText>
                 <h4>Phone</h4>
-                <p>+92 (300) 123-4567</p>
+                <p>
+                  <a href="tel:+923324261648">+92 332 4261648</a>
+                </p>
               </InfoText>
             </InfoItem>
 
@@ -699,7 +703,7 @@ const Contact = () => {
 
             <QuickContactButtons>
               <QuickContactButton
-                href="mailto:haseebahmad.dev@gmail.com"
+                href="mailto:haseebahmad321csgo@gmail.com"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -708,7 +712,7 @@ const Contact = () => {
               </QuickContactButton>
               
               <QuickContactButton
-                href="https://wa.me/923001234567"
+                href="https://wa.me/923324261648?text=Hi%20Haseeb%2C%20I%27d%20like%20to%20discuss%20a%20project."
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
@@ -716,6 +720,15 @@ const Contact = () => {
               >
                 <FiMessageSquare />
                 WhatsApp
+              </QuickContactButton>
+              
+              <QuickContactButton
+                href="tel:+923324261648"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <FiPhone />
+                Call Me
               </QuickContactButton>
             </QuickContactButtons>
 

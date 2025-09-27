@@ -253,7 +253,7 @@ const LoadingText = styled(motion.h2)`
   letter-spacing: 0.5px;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.large};
+    font-size: ${typography.mobile.body};
   }
 `;
 
@@ -312,7 +312,7 @@ const ProgressText = styled.div`
   margin-top: 0.5rem;
 
   ${media.mobile} {
-    font-size: ${typography.mobile.body.base};
+    font-size: ${typography.mobile.body};
   }
 `;
 
