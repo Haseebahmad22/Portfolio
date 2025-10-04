@@ -7,38 +7,45 @@ export const GlobalStyles = createGlobalStyle`
 
   :root {
     /* Light mode (default) */
-    --bg-primary: #f9fafb;
-    --bg-secondary: #ffffff;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
-    --accent-primary: #6366f1;
-    --accent-hover: #4f46e5;
-    --accent-secondary: #8b5cf6;
-    --border: #e5e7eb;
-    --border-hover: #d1d5db;
-    --card-bg: #ffffff;
-    --shadow: rgba(0, 0, 0, 0.08);
-    --shadow-hover: rgba(0, 0, 0, 0.12);
+  --bg-primary: #06070d;
+  --bg-secondary: #0d1117;
+  --bg-tertiary: #141b24;
+  --text-primary: #e2e8f5;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-primary: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-secondary: #ec4899;
+  --accent-cyan: #22d3ee;
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --border: #1f2937;
+  --border-hover: #2d3b4b;
+  --card-bg: #0f1621;
+  --card-alt: #162232;
+  --shadow: 0 8px 32px rgba(0,0,0,0.65);
+  --shadow-hover: 0 12px 48px rgba(0,0,0,0.7);
     
     /* Dark mode overrides */
     @media (prefers-color-scheme: dark) {
-      --bg-primary: #0f172a;
-      --bg-secondary: #1e293b;
-      --text-primary: #e2e8f0;
+      --bg-primary: #05060b;
+      --bg-secondary: #0d1117;
+      --bg-tertiary: #141b24;
+      --text-primary: #e2e8f5;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
-      --border: #334155;
-      --border-hover: #475569;
-      --card-bg: #1e293b;
-      --shadow: rgba(0, 0, 0, 0.25);
-      --shadow-hover: rgba(0, 0, 0, 0.35);
+      --border: #1f2937;
+      --border-hover: #2d3b4b;
+      --card-bg: #0f1621;
+      --shadow: 0 8px 32px rgba(0,0,0,0.65);
+      --shadow-hover: 0 12px 48px rgba(0,0,0,0.7);
     }
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
-    --gradient-accent: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --gradient-primary: linear-gradient(135deg,#6366f1 0%,#8b5cf6 35%,#ec4899 70%,#22d3ee 100%);
+  --gradient-secondary: linear-gradient(135deg,#3b82f6 0%,#6366f1 50%,#a855f7 100%);
+  --gradient-accent: linear-gradient(135deg,#6366f1 0%,#ec4899 50%,#22d3ee 100%);
+  --gradient-glass: linear-gradient(145deg,rgba(99,102,241,0.12),rgba(168,85,247,0.08),rgba(236,72,153,0.06));
     
     /* Transitions */
     --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -165,27 +172,11 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--text-primary);
   }
 
-  h1 {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-  }
+  h1 { font-size: clamp(1.9rem, 4.2vw, 3.2rem); font-weight:800; letter-spacing:-0.035em; }
+  h2 { font-size: clamp(1.4rem, 3.2vw, 2.1rem); font-weight:700; }
+  h3 { font-size: clamp(1.15rem, 2.4vw, 1.55rem); font-weight:600; }
 
-  h2 {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 700;
-  }
-
-  h3 {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    font-weight: 600;
-  }
-
-  p {
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin: 0;
-  }
+  p { line-height:1.65; color:var(--text-secondary); margin:0; max-width:68ch; }
 
   code {
     font-family: 'Fira Code', monospace;
@@ -198,10 +189,10 @@ export const GlobalStyles = createGlobalStyle`
 
   /* Modern utility classes */
   .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 1rem;
-    box-shadow: 0 4px 20px var(--shadow);
+    background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow);
     transition: all var(--transition-normal);
     
     &:hover {
@@ -212,10 +203,10 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 1rem;
+    background: var(--gradient-glass);
+    backdrop-filter: blur(28px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 1.25rem;
     transition: all var(--transition-normal);
     
     &:hover {
@@ -225,13 +216,7 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .text-gradient {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-  }
+  .text-gradient { background:var(--gradient-primary); -webkit-background-clip:text; background-clip:text; color:transparent; display:inline-block; }
 
   .glow-effect {
     box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
@@ -242,40 +227,12 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: var(--accent-primary);
-    color: white;
-    border: none;
-    border-radius: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    
-    &:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
-    
-    &.btn-outline {
-      background: transparent;
-      color: var(--accent-primary);
-      border: 2px solid var(--accent-primary);
-      
-      &:hover {
-        background: var(--accent-primary);
-        color: white;
-      }
-    }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:0.6rem; padding:0.85rem 1.6rem; background:linear-gradient(135deg,#6366f1,#ec4899); color:#fff; border:none; border-radius:1rem; font-weight:600; letter-spacing:0.01em; cursor:pointer; position:relative; overflow:hidden; transition:all var(--transition-fast); box-shadow:0 8px 24px -6px rgba(99,102,241,0.5);
+    &:hover { transform:translateY(-3px); box-shadow:0 14px 40px -8px rgba(99,102,241,0.55),0 0 0 1px rgba(255,255,255,0.05); }
+    &:active { transform:translateY(-1px); }
+    &::before { content:''; position:absolute; inset:0; background:linear-gradient(120deg,rgba(255,255,255,0.15),transparent 60%); opacity:0; transition:opacity 0.5s; }
+    &:hover::before { opacity:1; }
+    &.btn-outline { background:transparent; color:var(--accent-primary); border:2px solid var(--accent-primary); box-shadow:none; &:hover { background:var(--accent-primary); color:#fff; } }
   }
 
   /* Subtle animations */

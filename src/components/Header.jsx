@@ -321,7 +321,6 @@ const Header = () => {
     { to: '/about', label: 'About', icon: FiUser, section: 'about' },
     { to: '/skills', label: 'Skills', icon: FiCode, section: 'skills' },
     { to: '/projects', label: 'Projects', icon: FiBriefcase, section: 'projects' },
-    { to: '/experience', label: 'Experience', icon: FiBookOpen, section: 'experience' },
     { to: '/contact', label: 'Contact', icon: FiMail, section: 'contact' },
   ];
 

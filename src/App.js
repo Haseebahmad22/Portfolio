@@ -18,7 +18,6 @@ import {
   LazyAbout,
   LazySkills,
   LazyProjects,
-  LazyExperience,
   LazyContact,
   preloadAllComponents,
   logBundleInfo
@@ -99,7 +98,6 @@ function App() {
                         <Route path="/about" element={<LazyAbout />} />
                         <Route path="/skills" element={<LazySkills />} />
                         <Route path="/projects" element={<LazyProjects />} />
-                        <Route path="/experience" element={<LazyExperience />} />
                         <Route path="/contact" element={<LazyContact />} />
                         {/* 404 fallback */}
                         <Route path="*" element={

@@ -35,10 +35,10 @@ export const ParticlesWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  display: grid; grid-template-columns: 1.2fr 0.8fr; gap:4rem; align-items:center; width:100%; max-width:1400px; z-index:2; position:relative;
-  ${media.laptop} { grid-template-columns:1fr; gap:3rem; text-align:center; max-width:800px; }
-  ${media.tablet} { gap:2rem; max-width:100%; }
-  ${media.mobile} { gap:1.5rem; padding:0; }
+  display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; align-items:center; width:100%; max-width:1400px; z-index:2; position:relative;
+  ${media.laptop} { grid-template-columns:1fr 1fr; gap:3rem; }
+  ${media.tablet} { grid-template-columns:1fr; text-align:center; gap:3rem; max-width:900px; }
+  ${media.mobile} { gap:2rem; padding:0; }
 `;
 
 export const LeftContent = styled(motion.div)`
@@ -138,6 +138,51 @@ export const RightContent = styled(motion.div)`
   display:flex; flex-direction:column; gap:${({theme})=>theme.spacing['2xl']}; z-index:3;
 `;
 
+// Portrait / Headshot area replacing TechTabs on Home
+export const PortraitWrapper = styled.div`
+  display:flex; align-items:center; justify-content:center; width:100%;
+`;
+export const PortraitFrame = styled(motion.div)`
+  position:relative; width:100%; max-width:420px; aspect-ratio:1/1; border-radius:28px; overflow:hidden; background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.15); backdrop-filter:blur(20px); box-shadow:0 20px 40px -10px rgba(0,0,0,0.4); isolation:isolate;
+  &::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(99,102,241,0.35), transparent 60%); mix-blend-mode:overlay; pointer-events:none; }
+  ${media.mobile}{ max-width:320px; border-radius:24px; }
+`;
+export const PortraitImage = styled.img`
+  width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.05); transition:transform 0.6s ease, filter 0.6s ease; position:relative; z-index:2;
+  ${PortraitFrame}:hover & { transform:scale(1.05); filter:saturate(1.15) contrast(1.1); }
+`;
+export const PortraitGlow = styled.div`
+  position:absolute; inset:0; background:linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.25), rgba(236,72,153,0.25)); opacity:0.35; mix-blend-mode:screen; z-index:1; pointer-events:none; transition:opacity 0.5s ease; ${PortraitFrame}:hover & { opacity:0.5; }
+`;
+
+// Compact skills pills preview
+export const PillsSection = styled.div`
+  display:flex; flex-direction:column; gap:${({theme})=>theme.spacing.lg}; padding:${({theme})=>theme.spacing.lg}; background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); border:1px solid rgba(255,255,255,0.12); border-radius:24px; backdrop-filter:blur(18px); position:relative; overflow:hidden; max-width:600px; margin-top:${({theme})=>theme.spacing.md};
+  &::before { content:''; position:absolute; top:-40%; left:-30%; width:160%; height:160%; background:radial-gradient(circle at 30% 30%, rgba(99,102,241,0.25), transparent 70%); opacity:0.5; pointer-events:none; }
+  ${media.mobile}{ padding:${({theme})=>theme.spacing.md}; }
+`;
+export const PillsHeader = styled.div` text-align:center; display:flex; flex-direction:column; gap:0.25rem;`;
+export const PillsTitle = styled.h3`
+  font-size:clamp(1.6rem,3vw,2rem); font-weight:800; background:linear-gradient(135deg,#6366f1,#a855f7,#ec4899); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-0.5px; margin:0;
+`;
+export const PillsSubtitle = styled.p`
+  font-size:0.95rem; color:${({theme})=>theme.colors.textSecondary}; opacity:0.85; max-width:420px; margin:0 auto; line-height:1.5;
+`;
+export const PillsRow = styled.div`
+  display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center;
+`;
+export const SkillPill = styled(motion.div)`
+  display:inline-flex; align-items:center; gap:0.5rem; padding:0.65rem 1rem; border-radius:999px; background:linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)); border:1px solid rgba(255,255,255,0.15); font-size:0.85rem; font-weight:600; letter-spacing:0.25px; position:relative; overflow:hidden; color:${({theme})=>theme.colors.text};
+  .icon { display:flex; font-size:1rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+  &::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, ${({color})=>color||'#6366f1'}33, transparent 70%); opacity:0; transition:opacity 0.4s ease; }
+  &:hover::after { opacity:0.8; }
+  &:hover { border-color:${({color})=>color||'#6366f1'}AA; box-shadow:0 4px 18px -4px ${({color})=>color||'#6366f1'}55; }
+`;
+export const ViewAllLink = styled(motion.button)`
+  background:var(--gradient-accent); color:#fff; border:none; cursor:pointer; padding:0.65rem 1.1rem; border-radius:999px; font-size:0.8rem; font-weight:600; letter-spacing:0.5px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 8px 24px -6px rgba(99,102,241,0.45); position:relative; overflow:hidden;
+  &::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(255,255,255,0.15), transparent, rgba(255,255,255,0.15)); mix-blend-mode:overlay; opacity:0.6; }
+`;
+
 export const TechSection = styled.div`
   background:linear-gradient(145deg, rgba(99,102,241,0.08) 0%, rgba(168,85,247,0.06) 50%, rgba(236,72,153,0.05) 100%); backdrop-filter:blur(20px); border:1px solid rgba(99,102,241,0.2); border-radius:16px; padding:${({theme})=>theme.spacing.lg}; position:relative; overflow:hidden; margin-top:${({theme})=>theme.spacing.md}; max-width:600px; > * { position:relative; z-index:2; } ${media.mobile}{ padding:${({theme})=>theme.spacing.md}; margin-top:${({theme})=>theme.spacing.sm}; max-width:100%; }
 `;
@@ -184,3 +229,31 @@ export const FloatingElement = styled(motion.div)`
 export const ScrollIndicator = styled(motion.div)`
   position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:0.5rem; color:${({theme})=>theme.colors.textSecondary}; font-size:0.9rem; z-index:3; .arrow{ animation:bounce 2s infinite; } @keyframes bounce { 0%,20%,50%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-10px);} 60%{transform:translateY(-5px);} } @media (max-width:${({theme})=>theme.breakpoints.mobile}) { display:none; }
 `;
+
+// Full-width horizontal technologies strip (marquee style, but accessible and pause on hover)
+export const TechStripWrapper = styled.div`
+  width:100%; margin:3rem 0 2.5rem; position:relative; overflow:hidden; padding:2.25rem clamp(1rem,3vw,2.25rem); background:linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)); border:1px solid rgba(255,255,255,0.08); border-radius:28px; backdrop-filter:blur(22px);
+`;
+export const TechIconsGrid = styled.div`
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1.5rem; align-items:stretch; justify-items:center;
+  @media (max-width:600px){ grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:1rem; }
+`;
+  // Three-line slimmer pill layout
+  export const TechRowsContainer = styled.div`
+    display:flex; flex-direction:column; gap:0.85rem; width:100%;
+  `;
+  export const TechRow = styled.div`
+    display:flex; flex-wrap:wrap; gap:0.75rem; justify-content:center;
+  `;
+  export const TechPill = styled.div`
+    --c:${({$color})=>$color||'#888'}; display:inline-flex; align-items:center; gap:0.55rem; padding:0.55rem 1.05rem 0.55rem 0.7rem; font-size:0.78rem; font-weight:600; letter-spacing:0.35px; border-radius:999px; background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.09); color:#fff; position:relative; line-height:1; backdrop-filter:blur(14px) saturate(150%); cursor:default; transition:background 0.5s ease, transform 0.55s cubic-bezier(.19,1,.22,1), border-color 0.45s, box-shadow 0.55s ease;
+    .icon{ width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:var(--c); background:radial-gradient(circle at 35% 30%, var(--c)55, transparent 70%); border-radius:50%; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.45)); box-shadow:0 0 0 1px rgba(255,255,255,0.12), 0 4px 12px -4px var(--c)66; }
+    &:hover{ background:linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03)); transform:translateY(-4px); border-color:var(--c); box-shadow:0 10px 28px -10px var(--c), 0 6px 18px -8px rgba(0,0,0,0.55); }
+    &:active{ transform:translateY(-1px); }
+  `;
+  export const ViewAllSkillsLink = styled.button`
+    margin-top:0.65rem; align-self:center; background:none; border:none; color:var(--accent-color,#a78bfa); font-size:0.75rem; font-weight:600; letter-spacing:0.6px; cursor:pointer; position:relative; padding:0.4rem 0.9rem; border-radius:8px; display:inline-flex; align-items:center; gap:0.35rem; opacity:0.85; transition:opacity 0.4s ease, transform 0.45s cubic-bezier(.19,1,.22,1);
+    &:after{ content:''; position:absolute; left:0; bottom:0; height:2px; width:100%; background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899); transform:scaleX(0); transform-origin:left; transition:transform 0.55s ease; border-radius:2px; }
+    &:hover{ opacity:1; transform:translateY(-3px); }
+    &:hover:after{ transform:scaleX(1); }
+  `;

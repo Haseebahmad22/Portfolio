@@ -47,7 +47,7 @@ export const tabs = [
 
 // High level stats shown in hero section
 export const stats = [
-  { number: 50, label: 'Projects Built', suffix: '+' },
+  { number: 120, label: 'K Lines of Code', suffix: '+' },
   { number: 2, label: 'Years Experience', suffix: '+' },
   { number: 25, label: 'Technologies', suffix: '+' },
   { number: 100, label: 'Happy Clients', suffix: '%' },

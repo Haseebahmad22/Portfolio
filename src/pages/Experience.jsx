@@ -1,3 +1,8 @@
+/*
+  Deprecated (2025-09-30): Standalone Experience page removed.
+  Timeline content now lives on the Home page (ExperienceTimeline section).
+  This file is retained temporarily; safe to delete once confirmed unused.
+*/
 import { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';

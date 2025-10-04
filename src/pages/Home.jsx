@@ -4,10 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import Particles from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 // Child components
-import Hero from '../components/home/Hero';
-import TechTabs from '../components/home/TechTabs';
-import Personality from '../components/home/Personality';
-import SocialLinksBar from '../components/home/SocialLinksBar';
+import ModernHero from '../components/home/ModernHero';
+import HeroVisual from '../components/home/HeroVisual';
+// TechTabs moved to Skills page. Replaced here with Portrait + SkillsPills preview.
+import TechStrip from '../components/home/TechStrip';
+// New sections
+// Removed SkillsPreview in favor of a single horizontal technology strip
+import ProjectsShowcase from '../components/home/sections/ProjectsShowcase';
+import ExperienceTimeline from '../components/home/sections/ExperienceTimeline';
+import ContactCTA from '../components/home/sections/ContactCTA';
 import { useInView } from 'react-intersection-observer';
 import { media, touch, typography } from '../utils/responsive';
 import {
@@ -24,8 +29,7 @@ import 'aos/dist/aos.css';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('frontend');
-  const gridRef = useRef(null);
+  // Removed activeTab/gridRef logic (TechTabs relocated to Skills page)
   const [particlesReady, setParticlesReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
@@ -101,59 +105,7 @@ const Home = () => {
     setParticlesReady(true);
   };
 
-  // Fit tech labels inside their cards uniformly
-  const fitLabels = () => {
-    if (!gridRef.current) return;
-  const SAFE = 2; // px breathing room to avoid clipping edges
-  const MIN_SCALE = 0.8; // raised minimum scale per feedback
-    const run = () => {
-      const cards = gridRef.current?.querySelectorAll('[data-tech-card="true"]') || [];
-      cards.forEach((card) => {
-        const wrap = card.querySelector('.labelWrap');
-        const label = card.querySelector('.label');
-        if (!wrap || !label) return;
-
-        // Do not reset transform to avoid flicker on exiting items; 
-        // scrollWidth uses natural content width, unaffected by transforms.
-        label.style.transformOrigin = 'center';
-
-        const wrapWidth = Math.floor(wrap.getBoundingClientRect().width) - SAFE;
-        const labelWidth = Math.ceil(label.scrollWidth);
-        if (wrapWidth > 0 && labelWidth > 0) {
-          const needed = wrapWidth / labelWidth;
-          const scale = Math.min(1, Math.max(MIN_SCALE, needed * 0.98));
-          label.style.transform = `scale(${scale})`;
-        }
-      });
-    };
-    // Allow layout/animations to settle; run twice for reliability
-    requestAnimationFrame(() => setTimeout(run, 0));
-    setTimeout(run, 200);
-  };
-
-  // Recompute on tab change, resize, and after animations
-  useEffect(() => {
-    const onResize = () => fitLabels();
-    window.addEventListener('resize', onResize);
-    const id = setTimeout(fitLabels, 500); // wait for exit/enter animations
-
-    // Observe grid size/content changes
-    let ro;
-    if ('ResizeObserver' in window && gridRef.current) {
-      ro = new ResizeObserver(() => fitLabels());
-      ro.observe(gridRef.current);
-    }
-
-    // Run once after page load (fonts/layout ready)
-    window.addEventListener('load', fitLabels);
-
-    return () => {
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('load', fitLabels);
-      if (ro) ro.disconnect();
-      clearTimeout(id);
-    };
-  }, [activeTab, isMobile]);
+  // (TechTabs label fitting logic removed)
 
   // Intersection observer for counting animations
   const { ref: statsRef, inView: statsInView } = useInView({
@@ -233,7 +185,7 @@ const Home = () => {
   };
 
   // Imported data (technologies, tabs, stats, typewriterStrings)
-  const { technologies, tabs, stats, typewriterStrings } = require('../data/home');
+  const { stats, typewriterStrings } = require('../data/home');
 
   const handleScrollToProjects = () => navigate('/projects');
   const handleContactClick = () => navigate('/contact');
@@ -262,34 +214,30 @@ const Home = () => {
 
       <HeroSection>
         <ContentWrapper>
-          <Hero
+          <ModernHero
             stats={stats}
-            statsRef={statsRef}
-            statsInView={statsInView}
             typewriterStrings={typewriterStrings}
             onViewWork={handleScrollToProjects}
             onDownloadResume={downloadResume}
             onContact={handleContactClick}
           />
           <RightContent
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, delay: 0.6 }}
+            transition={{ duration: 1.0, delay: 0.4 }}
           >
-            <TechTabs
-              tabs={tabs}
-              activeTab={activeTab}
-              onChange={setActiveTab}
-              technologies={technologies}
-              gridRef={gridRef}
-              fitLabels={fitLabels}
-            />
-            <Personality />
+            <HeroVisual />
           </RightContent>
         </ContentWrapper>
       </HeroSection>
 
-      <SocialLinksBar />
+      {/* Full-width Technology Strip */}
+      <TechStrip />
+
+      {/* Multi-Section Scroll Experience */}
+      <ProjectsShowcase />
+      <ExperienceTimeline />
+      <ContactCTA />
     </HomeContainer>
   );
 };

@@ -1,18 +1,15 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { BiCodeAlt } from 'react-icons/bi';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import { FaPlay, FaDownload } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
 import { ReactTyped } from 'react-typed';
 import CountUp from 'react-countup';
 import {
   LeftContent,
-  HeroGreeting,
   HeroTitle,
   HeroSubtitle,
   HeroDescription,
-  BadgeRow,
-  Badge,
   ButtonGroup,
   PrimaryButton,
   SecondaryButton,
@@ -21,73 +18,79 @@ import {
   StatItem
 } from './HomeStyles';
 
+// Additional minimalist meta line (kept local to avoid broad style changes)
+const MetaLine = styled(motion.div)`
+  font-size:0.75rem; letter-spacing:0.15em; font-weight:600; text-transform:uppercase; color:var(--accent-primary);
+  opacity:0.9; margin-bottom:0.75rem; display:flex; gap:0.75rem; flex-wrap:wrap;
+`;
+
+const CompactDescription = styled(HeroDescription)`
+  font-size:1.05rem; line-height:1.6; margin-bottom:1.75rem;
+`;
+
 const Hero = ({ stats, statsInView, statsRef, typewriterStrings, onViewWork, onDownloadResume, onContact }) => {
   return (
     <LeftContent>
-      <HeroGreeting
-        initial={{ opacity: 0, y: 30 }}
+      <MetaLine
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
       >
-        <span className="wave">👋</span> Hey there, I'm
-        <span className="sparkle">✨</span>
-      </HeroGreeting>
+        <span>FULL-STACK ENGINEER</span>
+      </MetaLine>
 
       <HeroTitle
+        as={motion.h1}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
+        transition={{ duration: 0.75, delay: 0.3 }}
       >
         <span className="name">Haseeb Ahmad</span>
         <div className="role-container">
-          <span className="role">Full Stack</span>
-          <span className="role" style={{ color: '#6366f1' }}>Developer</span>
-          <motion.div
-            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
-            transition={{ repeat: Infinity, duration: 2, delay: 1 }}
-          >
-            🚀
-          </motion.div>
+          <span className="role" style={{ color: 'var(--text-primary)' }}>Building reliable</span>
+          <span className="role" style={{ color: '#6366f1' }}>web & cloud solutions</span>
         </div>
       </HeroTitle>
 
-      <HeroSubtitle
+      {typewriterStrings && typewriterStrings.length > 0 && (
+        <HeroSubtitle
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          style={{ fontSize: '1.15rem', fontWeight: 500, color: 'var(--text-secondary)' }}
+        >
+          <ReactTyped
+            strings={typewriterStrings}
+            typeSpeed={65}
+            backSpeed={45}
+            backDelay={1800}
+            loop
+            className="typed-text"
+          />
+        </HeroSubtitle>
+      )}
+
+      <CompactDescription
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        transition={{ duration: 0.75, delay: 0.65 }}
       >
-        <BiCodeAlt className="icon" />
-        <ReactTyped
-          strings={typewriterStrings}
-          typeSpeed={80}
-          backSpeed={60}
-          backDelay={2000}
-          loop
-          className="typed-text"
-        />
-      </HeroSubtitle>
+        I design and ship <span className="highlight">scalable, maintainable</span> products across the
+        stack—clean APIs, resilient architectures, and thoughtful interfaces. Focused on code quality,
+        performance, and delivering measurable business value.
+      </CompactDescription>
 
-      <HeroDescription
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-      >
-        I'm a <span className="highlight">passionate developer</span> who transforms ideas into
-        extraordinary digital experiences. Specializing in modern web technologies, I create
-        <span className="passion"> stunning, scalable applications</span> that captivate users
-        and drive business success. Let's build something incredible together! ✨
-      </HeroDescription>
-
-      <BadgeRow
+      <MetaLine
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
+        transition={{ duration: 0.45, delay: 0.75, ease: 'easeOut' }}
+        style={{ gap: '0.5rem', fontSize: '0.7rem', opacity: 0.75, letterSpacing: '0.12em' }}
       >
-        <Badge title="Open to opportunities">🟢 Open to Work</Badge>
-        <Badge title="Remote friendly">🌍 Remote Friendly</Badge>
-        <Badge title="Based in Pakistan">📍 Pakistan</Badge>
-      </BadgeRow>
+        <span>Open to Work</span>
+        <span>• Remote</span>
+        <span>• Pakistan</span>
+      </MetaLine>
 
       <StatsSection
         ref={statsRef}
@@ -122,17 +125,14 @@ const Hero = ({ stats, statsInView, statsRef, typewriterStrings, onViewWork, onD
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1.4 }}
       >
-        <PrimaryButton whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onViewWork}>
-          <FaPlay className="icon" />
-          View My Work
+        <PrimaryButton whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onViewWork}>
+          <FaPlay className="icon" /> Projects
         </PrimaryButton>
-        <SecondaryButton whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onDownloadResume}>
-          <FaDownload className="icon" />
-          Download Resume
+        <SecondaryButton whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onDownloadResume}>
+          <FaDownload className="icon" /> Resume
         </SecondaryButton>
-        <GhostButton whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onContact}>
-          <HiOutlineMail className="icon" />
-          Contact Me
+        <GhostButton whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} onClick={onContact}>
+          <HiOutlineMail className="icon" /> Contact
         </GhostButton>
       </ButtonGroup>
     </LeftContent>
