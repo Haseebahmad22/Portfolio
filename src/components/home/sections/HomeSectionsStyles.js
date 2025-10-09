@@ -93,14 +93,17 @@ export const TimelineText = styled.p`
 `;
 
 export const CTAWrapper = styled.div`
-  margin:3rem auto 0; max-width:860px; background:linear-gradient(135deg, rgba(99,102,241,0.18), rgba(236,72,153,0.14)); border:1px solid rgba(255,255,255,0.14); border-radius:28px; padding:3.2rem clamp(1.5rem,4vw,3.5rem); position:relative; overflow:hidden; backdrop-filter:blur(32px); box-shadow:0 18px 48px -12px rgba(0,0,0,0.55);
-  &::before,&::after{content:''; position:absolute; border-radius:50%; filter:blur(45px); opacity:0.4; animation:float 16s ease-in-out infinite;}
-  &::before{ width:420px; height:420px; background:radial-gradient(circle at 30% 30%,rgba(99,102,241,0.55),transparent 70%); top:-15%; left:-10%; }
-  &::after{ width:380px; height:380px; background:radial-gradient(circle at 70% 70%,rgba(236,72,153,0.4),transparent 70%); bottom:-20%; right:-5%; animation-direction:reverse; }
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-25px);} }
+  margin:4rem auto 0; max-width:940px; background:linear-gradient(125deg, rgba(20,25,45,0.85), rgba(28,16,40,0.75)); border:1px solid rgba(255,255,255,0.12); border-radius:32px; padding:3.4rem clamp(1.7rem,4vw,3.7rem); position:relative; overflow:hidden; backdrop-filter:blur(36px); box-shadow:0 24px 60px -14px rgba(0,0,0,0.6);
+  &::before,&::after{content:''; position:absolute; border-radius:50%; filter:blur(55px); opacity:0.35; animation:float 18s ease-in-out infinite;}
+  &::before{ width:520px; height:520px; background:radial-gradient(circle at 30% 30%,rgba(99,102,241,0.55),transparent 70%); top:-20%; left:-15%; }
+  &::after{ width:460px; height:460px; background:radial-gradient(circle at 70% 70%,rgba(236,72,153,0.45),transparent 70%); bottom:-25%; right:-10%; animation-direction:reverse; }
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-28px);} }
 `;
 export const CTATitle = styled.h2`
-  font-size:clamp(1.8rem,3.2vw,2.4rem); font-weight:800; letter-spacing:-0.03em; margin:0 0 1rem; background: linear-gradient(135deg,#fff 0%,#e2e8f0 60%,#94a3b8 100%); -webkit-background-clip:text; color:transparent;
+  font-size:clamp(2rem,3.2vw,2.7rem); font-weight:800; letter-spacing:-0.035em; margin:0 0 1.25rem; line-height:1.1; position:relative;
+  background:linear-gradient(120deg,#ffffff 0%,#dbe2f1 55%,#a5b4c9 100%); -webkit-background-clip:text; color:transparent;
+  &::after{content:''; position:absolute; left:0; bottom:-6px; width:160px; height:4px; border-radius:4px; background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899); box-shadow:0 0 18px -4px #8b5cf6AA;}
+  @media (max-width:700px){ &::after{ width:120px; } }
 `;
 export const CTAText = styled.p`
   font-size:clamp(0.9rem,1.15vw,1.05rem); line-height:1.6; color:var(--text-secondary); max-width:60ch; margin:0 0 2rem;
