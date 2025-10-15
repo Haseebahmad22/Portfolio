@@ -8,12 +8,14 @@ import {
   TabContainer,
   Tab,
   TechGrid,
-  TechItem
+  TechItem,
+  TechInner
 } from './HomeStyles';
 
-const TechTabs = ({ tabs, activeTab, onChange, technologies, gridRef, fitLabels }) => {
+const TechTabs = ({ tabs, activeTab, onChange, technologies, gridRef, fitLabels, onTechClick, compact }) => {
   return (
-    <TechSection data-aos="fade-left" data-aos-delay="200">
+    <TechSection $full $compact={compact} data-aos="fade-left" data-aos-delay="200">
+      <TechInner $compact={compact}>
       <TechHeader>
         <TechTitle>My Tech Arsenal ⚡</TechTitle>
         <TechSubtitle>Technologies I master and love working with</TechSubtitle>
@@ -41,6 +43,7 @@ const TechTabs = ({ tabs, activeTab, onChange, technologies, gridRef, fitLabels 
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.4 }}
           onAnimationComplete={fitLabels}
+          $compact={compact}
         >
           {technologies[activeTab].map((tech, index) => (
             <TechItem
@@ -51,6 +54,8 @@ const TechTabs = ({ tabs, activeTab, onChange, technologies, gridRef, fitLabels 
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1, type: 'spring', stiffness: 100 }}
               whileHover={{ y: -10, transition: { duration: 0.2 } }}
+              onClick={() => onTechClick && onTechClick(tech)}
+              $compact={compact}
             >
               <span className="icon" style={{ color: tech.color }}>
                 {tech.icon}
@@ -62,6 +67,7 @@ const TechTabs = ({ tabs, activeTab, onChange, technologies, gridRef, fitLabels 
           ))}
         </TechGrid>
       </AnimatePresence>
+      </TechInner>
     </TechSection>
   );
 };

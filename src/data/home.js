@@ -2,7 +2,7 @@
 // This keeps large React elements and arrays out of the page component
 import React from 'react';
 import { FaReact, FaJs, FaNode, FaGit, FaFigma, FaDocker, FaPython, FaAws, FaJava } from 'react-icons/fa';
-import { SiTypescript, SiTailwindcss, SiMongodb, SiFirebase, SiPostgresql, SiRedis, SiExpress, SiNextdotjs, SiVercel, SiNetlify, SiVscodium, SiPostman, SiGithub } from 'react-icons/si';
+import { SiTypescript, SiTailwindcss, SiMongodb, SiFirebase, SiPostgresql, SiRedis, SiExpress, SiNextdotjs, SiVercel, SiNetlify, SiVscodium, SiPostman, SiGithub, SiCplusplus, SiDotnet } from 'react-icons/si';
 import { HiDesktopComputer, HiCog } from 'react-icons/hi';
 import { RiDatabase2Line } from 'react-icons/ri';
 
@@ -25,6 +25,8 @@ export const technologies = {
     { name: 'Redis', icon: <SiRedis />, color: '#DC382D' },
     { name: 'Java', icon: <FaJava />, color: '#ED8B00' },
     { name: 'Python', icon: <FaPython />, color: '#3776AB' },
+    { name: 'C++', icon: <SiCplusplus />, color: '#00599C' },
+    { name: 'C#', icon: <SiDotnet />, color: '#512BD4' },
   ],
   tools: [
     { name: 'Git', icon: <FaGit />, color: '#F05032' },

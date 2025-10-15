@@ -5,9 +5,12 @@ import { media, touch, typography } from '../../utils/responsive';
 export const SkillsContainer = styled.div`
   min-height: 100vh;
   position: relative;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   overflow: hidden;
   ${media.mobile} { min-height: auto; }
+`;
+
+export const SkillsFullBleed = styled.div`
+  position: absolute; inset:0; background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%); z-index:0; pointer-events:none;
 `;
 
 export const SkillsSection = styled.section`

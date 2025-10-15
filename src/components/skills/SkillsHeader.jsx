@@ -8,10 +8,10 @@ const SkillsHeader = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <SkillsTitle>Technical Skills</SkillsTitle>
-      <SkillsSubtitle>
-        A comprehensive overview of my technical expertise, tools mastery, and continuous learning journey
-      </SkillsSubtitle>
+         <SkillsTitle>My Tech Arsenal</SkillsTitle>
+         <SkillsSubtitle>
+           A comprehensive, up-to-date list of the technologies I use to build, ship, and scale.
+         </SkillsSubtitle>
     </HeaderWrapper>
   );
 };

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SkillsCards, SkillCard, SkillCardHeader, SkillsList, SkillItem, SkillInfo, SkillLevel, SkillProgress, SkillPercentage } from './SkillsStyles';
 import { FaDatabase } from 'react-icons/fa';
 import { HiDesktopComputer, HiCog } from 'react-icons/hi';
 import { useInView } from 'react-intersection-observer';
+import SkillTimelineModal from './SkillTimelineModal';
 
 const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
@@ -20,7 +21,13 @@ const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
     { category: 'Tools & DevOps', icon: <HiCog />, skills: skillsData.tools }
   ];
 
+  const [selectedSkill, setSelectedSkill] = useState(null);
+
+  const handleOpen = (skill) => setSelectedSkill(skill);
+  const handleClose = () => setSelectedSkill(null);
+
   return (
+    <>
     <SkillsCards ref={ref}>
       {activeCategory === 'all' ? (
         getSkillsByCategory().map((categoryData, index) => (
@@ -48,7 +55,7 @@ const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
                     {skill.icon}
                     <span>{skill.name}</span>
                   </SkillInfo>
-                  <SkillLevel>
+                  <SkillLevel onClick={()=>handleOpen(skill)} style={{cursor:'pointer'}} title="Click to view timeline">
                     <SkillProgress level={inView ? skill.level : 0} />
                     <SkillPercentage>{skill.level}%</SkillPercentage>
                   </SkillLevel>
@@ -70,7 +77,7 @@ const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
           </SkillCardHeader>
           <SkillsList>
             {getFilteredSkills().map((skill, index) => (
-              <SkillItem
+                <SkillItem
                 key={skill.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -81,7 +88,7 @@ const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
                   {skill.icon}
                   <span>{skill.name}</span>
                 </SkillInfo>
-                <SkillLevel>
+                <SkillLevel onClick={()=>handleOpen(skill)} style={{cursor:'pointer'}} title="Click to view timeline">
                   <SkillProgress level={skill.level} />
                   <SkillPercentage>{skill.level}%</SkillPercentage>
                 </SkillLevel>
@@ -91,6 +98,8 @@ const SkillsCardsPanel = ({ activeCategory, categories, skillsData }) => {
         </SkillCard>
       )}
     </SkillsCards>
+    {selectedSkill && <SkillTimelineModal skill={selectedSkill} onClose={handleClose} />}
+    </>
   );
 };
 

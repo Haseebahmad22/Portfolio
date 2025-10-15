@@ -1,33 +1,35 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import {
   SkillsContainer,
   SkillsSection,
-  SkillsGrid,
-  FloatingElement
+  SkillsFullBleed
 } from '../components/skills/SkillsStyles';
 import SkillsHeader from '../components/skills/SkillsHeader';
 import TechTabs from '../components/home/TechTabs';
-import StatsOverviewPanel from '../components/skills/StatsOverviewPanel';
-import CategoryFilters from '../components/skills/CategoryFilters';
-import SkillsCardsPanel from '../components/skills/SkillsCardsPanel';
-import SkillsCharts from '../components/skills/SkillsCharts';
+import ArsenalProgressGraph from '../components/skills/ArsenalProgressGraph';
 
 // Static data
-import {
-  skillsData,
-  categories,
-  stats,
-  frontendChartData,
-  backendChartData,
-  experienceData
-} from '../data/skills';
-import { technologies, tabs } from '../data/home';
+import { skillsData } from '../data/skills';
+import { HiDesktopComputer, HiCog } from 'react-icons/hi';
+import { RiDatabase2Line } from 'react-icons/ri';
 
 const Skills = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  // Local state for TechTabs now on Skills page
-  const [activeTab, setActiveTab] = useState('frontend');
   const gridRef = useRef(null);
+  const [activeTab, setActiveTab] = useState('frontend');
+  const [selected, setSelected] = useState(null);
+
+  // Derive technologies/tabs from the unified skillsData (so it's complete)
+  const technologies = useMemo(() => ({
+    frontend: skillsData.frontend.map(s => ({ name: s.name, icon: s.icon, color: s.color, level: s.level, experience: s.experience })),
+    backend: skillsData.backend.map(s => ({ name: s.name, icon: s.icon, color: s.color, level: s.level, experience: s.experience })),
+    tools: skillsData.tools.map(s => ({ name: s.name, icon: s.icon, color: s.color, level: s.level, experience: s.experience })),
+  }), []);
+
+  const tabs = useMemo(() => ([
+    { id: 'frontend', label: 'Frontend', icon: <HiDesktopComputer /> },
+    { id: 'backend', label: 'Backend', icon: <RiDatabase2Line /> },
+    { id: 'tools', label: 'Tools & DevOps', icon: <HiCog /> },
+  ]), []);
 
   // Simplified label fitting logic (reuse minimal portion)
   const fitLabels = () => {
@@ -59,18 +61,25 @@ const Skills = () => {
     window.addEventListener('resize', onResize);
     const id = setTimeout(fitLabels, 500);
     return () => { window.removeEventListener('resize', onResize); clearTimeout(id); };
-  }, [activeTab]);
+  }, []);
+
+  // Ensure a default selection so the graph is visible on first load
+  useEffect(() => {
+    const first = technologies[activeTab]?.[0];
+    if (!selected && first) setSelected(first);
+  }, [activeTab, technologies, selected]);
 
   return (
     <SkillsContainer>
-      {/* Floating decorative elements */}
-      <FloatingElement />
-      <FloatingElement />
-      <FloatingElement />
+      {/* full-bleed background */}
+      <SkillsFullBleed />
+  {/* Tech Arsenal with inline progress graph */}
 
       <SkillsSection>
         <SkillsHeader />
-        <StatsOverviewPanel stats={stats} />
+        <p style={{color:'var(--text-secondary)', margin:'0 0 0.5rem 0', fontWeight:600, fontSize:'0.95rem'}}>
+          Click any skill to view its progress timeline below.
+        </p>
         <TechTabs
           tabs={tabs}
           activeTab={activeTab}
@@ -78,24 +87,10 @@ const Skills = () => {
           technologies={technologies}
           gridRef={gridRef}
           fitLabels={fitLabels}
+          onTechClick={(tech)=> setSelected(tech)}
+          compact
         />
-        <CategoryFilters
-          categories={categories}
-          activeCategory={activeCategory}
-          onChange={setActiveCategory}
-        />
-        <SkillsGrid>
-          <SkillsCardsPanel
-            activeCategory={activeCategory}
-            categories={categories}
-            skillsData={skillsData}
-          />
-          <SkillsCharts
-            frontendChartData={frontendChartData}
-            backendChartData={backendChartData}
-            experienceData={experienceData}
-          />
-        </SkillsGrid>
+        <ArsenalProgressGraph skill={selected} />
       </SkillsSection>
     </SkillsContainer>
   );
