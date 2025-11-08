@@ -143,16 +143,17 @@ export const PortraitWrapper = styled.div`
   display:flex; align-items:center; justify-content:center; width:100%;
 `;
 export const PortraitFrame = styled(motion.div)`
-  position:relative; width:100%; max-width:420px; aspect-ratio:1/1; border-radius:28px; overflow:hidden; background:linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.15); backdrop-filter:blur(20px); box-shadow:0 20px 40px -10px rgba(0,0,0,0.4); isolation:isolate;
-  &::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(99,102,241,0.35), transparent 60%); mix-blend-mode:overlay; pointer-events:none; }
-  ${media.mobile}{ max-width:320px; border-radius:24px; }
+  position:relative; width:100%; max-width:420px; aspect-ratio:1/1; border-radius:50%; overflow:hidden; background:transparent; border:1px solid rgba(255,255,255,0.15); box-shadow:0 22px 46px -12px rgba(0,0,0,0.55); isolation:isolate;
+  ${media.mobile}{ max-width:320px; border-radius:50%; }
 `;
 export const PortraitImage = styled.img`
-  width:100%; height:100%; object-fit:cover; filter:saturate(1.05) contrast(1.05); transition:transform 0.6s ease, filter 0.6s ease; position:relative; z-index:2;
-  ${PortraitFrame}:hover & { transform:scale(1.05); filter:saturate(1.15) contrast(1.1); }
+  width:100%; height:100%; object-fit:cover; display:block; position:relative; z-index:2; border-radius:50%; filter:saturate(1.1) contrast(1.08) brightness(1.03);
+  transition:transform 0.6s ease, filter 0.6s ease;
+  ${PortraitFrame}:hover & { transform:scale(1.04); filter:saturate(1.22) contrast(1.18) brightness(1.06); }
 `;
 export const PortraitGlow = styled.div`
-  position:absolute; inset:0; background:linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.25), rgba(236,72,153,0.25)); opacity:0.35; mix-blend-mode:screen; z-index:1; pointer-events:none; transition:opacity 0.5s ease; ${PortraitFrame}:hover & { opacity:0.5; }
+  position:absolute; inset:0; background:radial-gradient(circle at 35% 30%, rgba(99,102,241,0.5), transparent 70%), radial-gradient(circle at 70% 65%, rgba(236,72,153,0.4), transparent 75%); opacity:0.22; mix-blend-mode:screen; z-index:1; pointer-events:none; transition:opacity 0.6s ease;
+  ${PortraitFrame}:hover & { opacity:0.38; }
 `;
 
 // Compact skills pills preview

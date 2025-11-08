@@ -8,6 +8,8 @@ import { BsStarFill, BsAward } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
 import { PieChart, Pie, Cell, ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
+import projectsData from '../data/projectsData';
+import { projects as baseProjects } from '../data/projects';
 import { media, touch, typography } from '../utils/responsive';
 
 const AboutContainer = styled.div`
@@ -817,45 +819,14 @@ const About = () => {
     triggerOnce: true,
   });
 
-  const { ref: skillsRef, inView: skillsInView } = useInView({
-    threshold: 0.2,
-    triggerOnce: true,
-  });
+  const { ref: skillsRef, inView: skillsInView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Enhanced skills data with proficiency levels
-  const skills = [
-    { name: 'JavaScript', level: 90 },
-    { name: 'React', level: 95 },
-    { name: 'Node.js', level: 85 },
-    { name: 'TypeScript', level: 80 },
-    { name: 'HTML/CSS', level: 95 },
-    { name: 'Git', level: 85 },
-    { name: 'Styled Components', level: 90 },
-    { name: 'Framer Motion', level: 85 },
-    { name: 'MongoDB', level: 75 },
-    { name: 'Firebase', level: 80 },
-    { name: 'Tailwind CSS', level: 90 },
-    { name: 'Express', level: 80 }
-  ];
-
-  // Skills data for charts
-  const frontendSkills = [
-    { name: 'React', value: 95, color: '#61DAFB' },
-    { name: 'JavaScript', value: 90, color: '#F7DF1E' },
-    { name: 'TypeScript', value: 80, color: '#3178C6' },
-    { name: 'CSS', value: 95, color: '#1572B6' }
-  ];
-
-  const backendSkills = [
-    { name: 'Node.js', value: 85, color: '#339933' },
-    { name: 'Express', value: 80, color: '#000000' },
-    { name: 'MongoDB', value: 75, color: '#47A248' },
-    { name: 'APIs', value: 85, color: '#FF6C37' }
-  ];
+  // Calculate dynamic project count to stay consistent with Projects page
+  const totalProjects = (baseProjects?.length || 0) + (projectsData?.length || 0);
 
   // Personal interests
   const interests = [
@@ -867,11 +838,11 @@ const About = () => {
     { icon: <BiRocket />, name: 'Space & Tech' }
   ];
 
-  // Enhanced stats
+  // Enhanced stats (projects count kept consistent with Projects page)
   const stats = [
     { 
       icon: <FaCode />, 
-      number: 50, 
+      number: totalProjects, 
       suffix: '+',
       label: 'Projects Completed',
       description: 'Full-stack applications built'
@@ -1014,7 +985,21 @@ const About = () => {
               whileHover={{ scale: 1.05, rotate: 5 }}
               transition={{ duration: 0.3 }}
             >
-              <FaUser />
+              <img
+                src="/profile.png"
+                alt="Profile"
+                loading="lazy"
+                decoding="async"
+                onError={(e)=>{
+                  if(!e.currentTarget.dataset.fallbackTried){
+                    e.currentTarget.dataset.fallbackTried='1';
+                    e.currentTarget.src='/porfile.png';
+                  } else if(!e.currentTarget.dataset.placeholder){
+                    e.currentTarget.dataset.placeholder='1';
+                    e.currentTarget.src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><defs><linearGradient id='g' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%236366f1'/><stop offset='50%' stop-color='%23a855f7'/><stop offset='100%' stop-color='%23ec4899'/></linearGradient></defs><rect width='600' height='600' fill='url(%23g)'/></svg>";
+                  }
+                }}
+              />
             </ProfileImage>
             <ProfileName>Haseeb Ahmad</ProfileName>
             <ProfileRole>Full Stack Developer</ProfileRole>
@@ -1040,71 +1025,8 @@ const About = () => {
           </ProfileCard>
         </MainContent>
 
-        {/* Skills and Interests Grid */}
+        {/* Interests only (Tech Arsenal removed as requested) */}
         <SkillsInterestsGrid>
-          {/* Enhanced Skills Section */}
-          <SkillsCard
-            ref={skillsRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: skillsInView ? 1 : 0, y: skillsInView ? 0 : 50 }}
-            transition={{ duration: 0.8 }}
-          >
-            <SkillsTitle>
-              <FaCode />
-              Technical Arsenal
-            </SkillsTitle>
-            
-            <SkillsGrid>
-              {skills.map((skill, index) => (
-                <SkillItem
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ 
-                    opacity: skillsInView ? 1 : 0, 
-                    y: skillsInView ? 0 : 30 
-                  }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                >
-                  <span>{skill.name}</span>
-                </SkillItem>
-              ))}
-            </SkillsGrid>
-
-            {/* Skills Charts */}
-            <SkillsChartContainer>
-              <ChartCard>
-                <h4>Frontend Skills</h4>
-                <ResponsiveContainer width="100%" height={200}>
-                  <RadialBarChart data={frontendSkills}>
-                    <RadialBar dataKey="value" cornerRadius={10} fill="#6366f1" />
-                  </RadialBarChart>
-                </ResponsiveContainer>
-              </ChartCard>
-              
-              <ChartCard>
-                <h4>Backend Skills</h4>
-                <ResponsiveContainer width="100%" height={200}>
-                  <PieChart>
-                    <Pie
-                      data={backendSkills}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={60}
-                    >
-                      {backendSkills.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartCard>
-            </SkillsChartContainer>
-          </SkillsCard>
-
-          {/* Interests Card */}
           <InterestsCard
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: skillsInView ? 1 : 0, y: skillsInView ? 0 : 50 }}
@@ -1133,7 +1055,7 @@ const About = () => {
               ))}
             </InterestsList>
           </InterestsCard>
-        </SkillsInterestsGrid>
+  </SkillsInterestsGrid>
 
         {/* Enhanced Stats Section */}
         <StatsSection ref={statsRef}>

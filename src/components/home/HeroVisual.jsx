@@ -24,9 +24,10 @@ const Core = styled(motion.div)`
   width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#ec4899); box-shadow:0 0 0 5px rgba(255,255,255,0.08), 0 0 38px -4px #6366f1AA, 0 0 64px -6px #ec489988; position:relative;
 `;
 
-const HeroVisual = () => {
+const HeroVisual = (props) => {
   return (
     <Wrapper
+      {...props}
       initial={{opacity:0, scale:0.9}}
       whileInView={{opacity:1, scale:1}}
       viewport={{once:true, amount:0.3}}

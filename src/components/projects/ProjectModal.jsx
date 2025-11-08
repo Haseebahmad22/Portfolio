@@ -100,7 +100,9 @@ export const ProjectModal = ({ project, onClose, showVideo, setShowVideo, slide,
                 </div>
                 <Actions>
                   <ActionBtn href={project.githubUrl} target='_blank' rel='noopener noreferrer'><FiGithub/> Source</ActionBtn>
-                  <ActionBtn href={project.liveUrl} target='_blank' rel='noopener noreferrer' $primary><FiExternalLink/> Live</ActionBtn>
+                  {(((project.title||'').toLowerCase().includes('gameexplorer') || (project.title||'').toLowerCase().includes('zarqais') || project.id==='proj-zarqais') && project.liveUrl && project.liveUrl !== '#') && (
+                    <ActionBtn href={project.liveUrl} target='_blank' rel='noopener noreferrer' $primary><FiExternalLink/> Live</ActionBtn>
+                  )}
                 </Actions>
               </ModalAside>
             </ModalMain>

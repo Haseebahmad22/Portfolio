@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import { LayoutGroup } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { projects, categories } from '../data/projects';
+import { projects as baseProjects, categories } from '../data/projects';
+import projectsData from '../data/projectsData';
 import { ProjectsHeader, ProjectFilters } from '../components/projects/ProjectsHeader';
 import { GridView, ShowcaseView, ListView } from '../components/projects/ProjectViews';
 import { ProjectModal } from '../components/projects/ProjectModal';
@@ -20,6 +21,29 @@ const Projects = () => {
   const [slide, setSlide] = useState(0); // modal carousel index
   const [viewMode, setViewMode] = useState('showcase');
   const { ref, inView } = useInView({ threshold:0.15, triggerOnce:true });
+
+  // Map minimal projectsData entries into full project objects expected by views
+  const mappedExtras = (projectsData || []).map((p, idx) => ({
+    id: p.id || `extra-${idx}`,
+    title: p.title,
+    description: p.description,
+    longDescription: p.description,
+    category: p.category || 'Frontend',
+    featured: false,
+    difficulty: 'Intermediate',
+    duration: '—',
+    status: 'Complete',
+    features: p.keyFeatures || [],
+    technologies: p.tech || [],
+    githubUrl: p.githubUrl || '#',
+    // Preserve liveUrl only; rendering layer will decide visibility (whitelist)
+    liveUrl: p.liveUrl || '#',
+    images: p.images && p.images.length ? p.images : ['/placeholders/generic.svg'],
+    video: '',
+    stats: { views: 0, stars: 0, commits: 0 }
+  }));
+
+  const projects = [...baseProjects, ...mappedExtras];
 
   // Filter projects based on active category
   const filtered = projects.filter(p => {

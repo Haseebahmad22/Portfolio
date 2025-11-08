@@ -99,7 +99,9 @@ export const ShowcaseView = ({ projects, onSelect }) => (
               </MiniStack>
               <div style={{display:'flex', gap:'.45rem'}} onClick={e=>e.stopPropagation()}>
                 <ActionBtn href={p.githubUrl} target='_blank' rel='noopener noreferrer' style={{flex:'unset', padding:'.55rem .85rem'}}><FiGithub/></ActionBtn>
-                <ActionBtn href={p.liveUrl} target='_blank' rel='noopener noreferrer' $primary style={{flex:'unset', padding:'.55rem .85rem'}}><FiExternalLink/></ActionBtn>
+                {(((p.title||'').toLowerCase().includes('gameexplorer') || (p.title||'').toLowerCase().includes('zarqais') || p.id==='proj-zarqais') && p.liveUrl && p.liveUrl !== '#') && (
+                  <ActionBtn href={p.liveUrl} target='_blank' rel='noopener noreferrer' $primary style={{flex:'unset', padding:'.55rem .85rem'}}><FiExternalLink/></ActionBtn>
+                )}
               </div>
             </ShowcaseFooter>
             <div style={{display:'flex', gap:'.5rem', marginTop:'.25rem'}}>
@@ -131,7 +133,9 @@ export const ListView = ({ projects, onSelect }) => (
           <ListActions onClick={e=>e.stopPropagation()}>
             <TinyBtn onClick={()=>onSelect(p)}><FiEye/> View</TinyBtn>
             <TinyBtn as='a' href={p.githubUrl} target='_blank' rel='noopener noreferrer'><FiGithub/></TinyBtn>
-            <TinyBtn as='a' href={p.liveUrl} target='_blank' rel='noopener noreferrer'><FiExternalLink/></TinyBtn>
+            {(((p.title||'').toLowerCase().includes('gameexplorer') || (p.title||'').toLowerCase().includes('zarqais') || p.id==='proj-zarqais') && p.liveUrl && p.liveUrl !== '#') && (
+              <TinyBtn as='a' href={p.liveUrl} target='_blank' rel='noopener noreferrer'><FiExternalLink/></TinyBtn>
+            )}
           </ListActions>
         </ListRow>
       ))}

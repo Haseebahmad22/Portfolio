@@ -6,6 +6,7 @@ import { loadSlim } from '@tsparticles/slim';
 // Child components
 import ModernHero from '../components/home/ModernHero';
 import HeroVisual from '../components/home/HeroVisual';
+import Portrait from '../components/home/Portrait';
 // TechTabs moved to Skills page. Replaced here with Portrait + SkillsPills preview.
 import TechStrip from '../components/home/TechStrip';
 // New sections
@@ -226,7 +227,13 @@ const Home = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.0, delay: 0.4 }}
           >
-            <HeroVisual />
+            <div style={{ position:'relative', width:'100%', display:'flex', alignItems:'center', justifyContent:'center', transform:'translateY(-120px)' }}>
+              {/* Visual background behind portrait */}
+              <HeroVisual style={{ position:'absolute', inset:0, height:'100%', pointerEvents:'none', zIndex:1 }} />
+              <div style={{ position:'relative', zIndex:2 }}>
+                <Portrait />
+              </div>
+            </div>
           </RightContent>
         </ContentWrapper>
       </HeroSection>
