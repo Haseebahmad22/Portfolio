@@ -20,7 +20,7 @@ export const projects = [
     ],
     technologies: ['React', 'Express', 'SQL', 'Tailwind CSS', 'Next.js'],
     githubUrl: 'https://github.com/AmarWaqar-TSKLI/GameStore2.0',
-    liveUrl: 'https://gamestore-rw.vercel.app/',
+  liveUrl: 'https://game-store2-0.vercel.app/',
     images: ['/g1.png'],
     video: '/gameexplorer.mp4',
     stats: { views: 1250, stars: 45, commits: 127 }
