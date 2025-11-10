@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 
 const NavigationContext = createContext();
 
@@ -33,15 +33,15 @@ export const NavigationProvider = ({ children }) => {
   };
 
   // Calculate scroll progress
-  const updateScrollProgress = () => {
+  const updateScrollProgress = useCallback(() => {
     const scrollPx = document.documentElement.scrollTop;
     const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (scrollPx / winHeightPx) * 100;
     setScrollProgress(scrolled);
-  };
+  }, []);
 
   // Detect active section based on scroll position
-  const updateActiveSection = () => {
+  const updateActiveSection = useCallback(() => {
     if (isScrolling) return; // Don't update during programmatic scrolling
 
     const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
@@ -54,7 +54,7 @@ export const NavigationProvider = ({ children }) => {
         break;
       }
     }
-  };
+  }, [isScrolling]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +66,7 @@ export const NavigationProvider = ({ children }) => {
     handleScroll(); // Initial call
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isScrolling]);
+  }, [isScrolling, updateActiveSection, updateScrollProgress]);
 
   // Add smooth scrolling to html element
   useEffect(() => {
