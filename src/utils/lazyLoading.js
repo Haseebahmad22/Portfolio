@@ -1,5 +1,4 @@
 import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
-import LoadingScreen from '../components/LoadingScreen';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { media } from './responsive';
@@ -229,7 +228,7 @@ const PlaceholderImage = styled.div`
   font-size: 2rem;
 `;
 
-export default {
+const lazyUtils = {
   LazyHome,
   LazyAbout,
   LazySkills,
@@ -243,3 +242,5 @@ export default {
   prefetchResource,
   logBundleInfo
 };
+
+export default lazyUtils;

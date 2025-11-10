@@ -1,5 +1,4 @@
-import { motion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Particles from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
@@ -14,8 +13,6 @@ import TechStrip from '../components/home/TechStrip';
 import ProjectsShowcase from '../components/home/sections/ProjectsShowcase';
 import ExperienceTimeline from '../components/home/sections/ExperienceTimeline';
 import ContactCTA from '../components/home/sections/ContactCTA';
-import { useInView } from 'react-intersection-observer';
-import { media, touch, typography } from '../utils/responsive';
 import {
   HomeContainer,
   HeroSection,
@@ -31,7 +28,6 @@ import 'aos/dist/aos.css';
 const Home = () => {
   const navigate = useNavigate();
   // Removed activeTab/gridRef logic (TechTabs relocated to Skills page)
-  const [particlesReady, setParticlesReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -97,90 +93,37 @@ const Home = () => {
   const shouldShowParticles = !prefersReducedMotion && (!isMobile || window.innerWidth > 480);
 
   // Initialize particles
-  const particlesLoaded = async (container) => {
-    console.log(container);
+  const particlesLoaded = async () => {
+    // no-op
   };
 
   const particlesInit = async (engine) => {
     await loadSlim(engine);
-    setParticlesReady(true);
   };
 
-  // (TechTabs label fitting logic removed)
-
-  // Intersection observer for counting animations
-  const { ref: statsRef, inView: statsInView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
-
-  // Enhanced particle configuration with mobile optimization
+  // Particle configuration
   const particlesOptions = {
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    fpsLimit: isMobile ? 30 : 60, // Reduce FPS on mobile for better performance
+    background: { color: { value: 'transparent' } },
+    fpsLimit: isMobile ? 30 : 60,
     interactivity: {
       events: {
-        onClick: {
-          enable: !isMobile, // Disable click interaction on mobile
-          mode: "push",
-        },
-        onHover: {
-          enable: !isTouch, // Disable hover on touch devices
-          mode: "repulse",
-        },
+        onClick: { enable: !isMobile, mode: 'push' },
+        onHover: { enable: !isTouch, mode: 'repulse' },
         resize: true,
       },
       modes: {
-        push: {
-          quantity: 4,
-        },
-        repulse: {
-          distance: 200,
-          duration: 0.4,
-        },
+        push: { quantity: 4 },
+        repulse: { distance: 200, duration: 0.4 },
       },
     },
     particles: {
-      color: {
-        value: "#6366f1",
-      },
-      links: {
-        color: "#6366f1",
-        distance: 150,
-        enable: true,
-        opacity: 0.3,
-        width: 1,
-      },
-      move: {
-        direction: "none",
-        enable: true,
-        outModes: {
-          default: "bounce",
-        },
-        random: false,
-        speed: 1,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          area: 800,
-        },
-        value: 60,
-      },
-      opacity: {
-        value: 0.5,
-      },
-      shape: {
-        type: "circle",
-      },
-      size: {
-        value: { min: 1, max: 3 },
-      },
+      color: { value: '#6366f1' },
+      links: { color: '#6366f1', distance: 150, enable: true, opacity: 0.3, width: 1 },
+      move: { direction: 'none', enable: true, outModes: { default: 'bounce' }, random: false, speed: 1, straight: false },
+      number: { density: { enable: true, area: 800 }, value: 60 },
+      opacity: { value: 0.5 },
+      shape: { type: 'circle' },
+      size: { value: { min: 1, max: 3 } },
     },
     detectRetina: true,
   };
@@ -196,6 +139,7 @@ const Home = () => {
     link.download = 'Haseeb_Ahmad_Resume.pdf';
     link.click();
   };
+
   return (
     <HomeContainer>
       <FloatingElement />
@@ -204,12 +148,7 @@ const Home = () => {
 
       {shouldShowParticles && (
         <ParticlesWrapper>
-          <Particles
-            id="tsparticles"
-            init={particlesInit}
-            loaded={particlesLoaded}
-            options={particlesOptions}
-          />
+          <Particles id="tsparticles" init={particlesInit} loaded={particlesLoaded} options={particlesOptions} />
         </ParticlesWrapper>
       )}
 
@@ -222,11 +161,7 @@ const Home = () => {
             onDownloadResume={downloadResume}
             onContact={handleContactClick}
           />
-          <RightContent
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.0, delay: 0.4 }}
-          >
+          <RightContent initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.0, delay: 0.4 }}>
             <div style={{ position:'relative', width:'100%', display:'flex', alignItems:'center', justifyContent:'center', transform:'translateY(-120px)' }}>
               {/* Visual background behind portrait */}
               <HeroVisual style={{ position:'absolute', inset:0, height:'100%', pointerEvents:'none', zIndex:1 }} />
