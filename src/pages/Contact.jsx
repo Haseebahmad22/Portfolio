@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMail, FiMapPin, FiPhone, FiSend, FiCheck, FiAlertCircle, FiUser, FiMessageSquare, FiClock, FiGlobe, FiHeart, FiZap } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiPhone, FiSend, FiCheck, FiAlertCircle, FiUser, FiMessageSquare, FiClock, FiGlobe, FiZap } from 'react-icons/fi';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaDiscord, FaDribbble } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
-import { media, touch, typography } from '../utils/responsive';
+import { media, typography } from '../utils/responsive';
 
 const ContactContainer = styled.div`
   max-width: 1200px;
@@ -226,11 +226,7 @@ const InfoText = styled.div`
   }
 `;
 
-const SocialLinks = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-`;
+// Removed unused SocialLinks wrapper
 
 const SocialIcon = styled(motion.a)`
   width: 48px;

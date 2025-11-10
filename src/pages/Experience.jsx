@@ -10,7 +10,7 @@ import { FiCalendar, FiMapPin, FiAward, FiTrendingUp, FiStar, FiBriefcase, FiCod
 import { FaGraduationCap } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
-import { media, touch, typography } from '../utils/responsive';
+// Removed unused responsive helpers (media breakpoints handled via theme directly)
 
 const experienceData = [
   {

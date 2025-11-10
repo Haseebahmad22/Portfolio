@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiGithub, FiExternalLink, FiEye, FiStar, FiCode } from 'react-icons/fi';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import {
   Grid, Card, Media, Cover, HoverOverlay, OverlayStats, StatMini, TechRow, TechIcon, Badges, Badge, CardBody, CardTitle, CardExcerpt, MetaBar, MetaItem, StackRow, Chip,
   ShowcaseList, ShowcaseItem, ShowcaseMedia, ShowcaseContent, ShowcaseTitle, ShowcaseExcerpt, ShowcaseMeta, ShowcaseTag, ShowcaseFooter, MiniStat, MiniStack,

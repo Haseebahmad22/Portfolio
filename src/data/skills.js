@@ -78,4 +78,6 @@ export const experienceData = [
   { name: '2024', projects: 24, skills: 25 }
 ];
 
-export default { skillsData, categories, stats, frontendChartData, backendChartData, experienceData };
+// Named export object to satisfy eslint import/no-anonymous-default-export
+export const skillsBundle = { skillsData, categories, stats, frontendChartData, backendChartData, experienceData };
+export default skillsBundle;

@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { FaGraduationCap, FaCode, FaHeart, FaGlobe, FaUser, FaLightbulb, FaCoffee, FaGamepad, FaMusic, FaCamera } from 'react-icons/fa';
-import { HiLocationMarker, HiMail, HiPhone, HiCalendar } from 'react-icons/hi';
+import { motion } from 'framer-motion';
+import { FaGraduationCap, FaCode, FaHeart, FaLightbulb, FaCoffee, FaGamepad, FaMusic, FaCamera } from 'react-icons/fa';
+import { HiLocationMarker, HiMail, HiCalendar } from 'react-icons/hi';
 import { BiRocket, BiTrendingUp, BiCodeAlt } from 'react-icons/bi';
-import { BsStarFill, BsAward } from 'react-icons/bs';
+import { BsStarFill } from 'react-icons/bs';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
-import { PieChart, Pie, Cell, ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
 import projectsData from '../data/projectsData';
 import { projects as baseProjects } from '../data/projects';
 import { media, touch, typography } from '../utils/responsive';
@@ -416,33 +414,7 @@ const SkillsInterestsGrid = styled.div`
   }
 `;
 
-const SkillsCard = styled(motion.div)`
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-primary);
-  border-radius: 24px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-
-  ${media.mobile} {
-    padding: 1.5rem;
-    border-radius: 20px;
-    margin: 0 -0.5rem;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--gradient-accent);
-    opacity: 0.03;
-    pointer-events: none;
-  }
-`;
+// Removed unused SkillsCard
 
 const SkillsTitle = styled.h3`
   font-size: clamp(1.4rem, 4vw, 1.6rem);
@@ -464,78 +436,7 @@ const SkillsTitle = styled.h3`
   }
 `;
 
-const SkillsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1.5rem;
-
-  ${media.tablet} {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-  }
-
-  ${media.mobile} {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 0.75rem;
-  }
-`;
-
-const SkillItem = styled(motion.div)`
-  padding: 1.5rem;
-  background: var(--accent-primary)05;
-  border: 1px solid var(--border-primary);
-  border-radius: 16px;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: default;
-  position: relative;
-  overflow: hidden;
-
-  ${media.mobile} {
-    padding: 1rem;
-    border-radius: 12px;
-    ${touch.target}
-  }
-
-  &:hover {
-    transform: translateY(-8px) scale(1.05);
-    background: var(--accent-primary)10;
-    border-color: var(--accent-primary);
-    box-shadow: 0 20px 40px var(--shadow-primary);
-
-    ${media.mobile} {
-      transform: translateY(-4px);
-    }
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-accent);
-    opacity: 0.1;
-    transition: left 0.3s ease;
-  }
-
-  &:hover::before {
-    left: 0;
-  }
-
-  span {
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-    font-weight: 600;
-    color: var(--text-primary);
-    position: relative;
-    z-index: 1;
-
-    ${media.mobile} {
-      font-size: ${typography.mobile.small};
-    }
-  }
-`;
+// Removed deprecated SkillsGrid and SkillItem components
 
 // Interests card
 const InterestsCard = styled(motion.div)`
@@ -775,55 +676,12 @@ const FloatingElement = styled(motion.div)`
 `;
 
 // Skills chart container
-const SkillsChartContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-
-  ${media.tablet} {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  ${media.mobile} {
-    gap: 1rem;
-  }
-  gap: ${({ theme }) => theme.spacing.xl};
-  margin-top: ${({ theme }) => theme.spacing.xl};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ChartCard = styled.div`
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  padding: ${({ theme }) => theme.spacing.lg};
-  text-align: center;
-
-  h4 {
-    color: ${({ theme }) => theme.colors.text};
-    margin-bottom: ${({ theme }) => theme.spacing.md};
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-`;
+// Removed unused SkillsChartContainer and ChartCard (charts deprecated)
 
 const About = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  // Intersection observer for animations
-  const { ref: statsRef, inView: statsInView } = useInView({
-    threshold: 0.3,
-    triggerOnce: true,
-  });
-
-  const { ref: skillsRef, inView: skillsInView } = useInView({ threshold: 0.2, triggerOnce: true });
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  // Simplified: only observe stats section and skills/interests reveal
+  const { ref: statsRef, inView: statsInView } = useInView({ threshold: 0.3, triggerOnce: true });
+  const { inView: skillsInView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   // Calculate dynamic project count to stay consistent with Projects page
   const totalProjects = (baseProjects?.length || 0) + (projectsData?.length || 0);

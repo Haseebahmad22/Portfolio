@@ -12,9 +12,7 @@ import {
   FiUser, 
   FiCode, 
   FiBriefcase, 
-  FiBookOpen, 
-  FiMail,
-  FiSettings
+  FiMail
 } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
 import { useNavigation } from '../context/NavigationContext';
@@ -279,10 +277,10 @@ const EasterEggCounter = styled(motion.div)`
 
 const Header = () => {
   const { isDarkMode, toggleTheme } = useTheme();
-  const { scrollProgress, scrollToSection, activeSection } = useNavigation();
+  const { scrollProgress, activeSection } = useNavigation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [logoClickCount, setLogoClickCount] = useState(0);
+  const [, setLogoClickCount] = useState(0);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
 
   // Handle scroll detection

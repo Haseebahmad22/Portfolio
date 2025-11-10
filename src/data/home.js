@@ -64,4 +64,6 @@ export const typewriterStrings = [
   'Scalable Solutions'
 ];
 
-export default { technologies, tabs, stats, typewriterStrings };
+// Named export object to satisfy eslint import/no-anonymous-default-export
+export const homeData = { technologies, tabs, stats, typewriterStrings };
+export default homeData;

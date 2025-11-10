@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionWrapper, SectionHeader, Eyebrow, SectionTitle, SectionSubtitle, CTAWrapper, CTATitle, CTAText, CTAButtons, CTAButton, CTAButtonSecondary } from './HomeSectionsStyles';
+import { SectionWrapper, CTAWrapper, CTATitle, CTAText, CTAButtons, CTAButton, CTAButtonSecondary } from './HomeSectionsStyles';
 
 const ContactCTA = () => {
   const handleHire = () => window.location.href = '/contact';
