@@ -28,7 +28,7 @@ export const projectsData = [
     description: 'Interpretable ML toolkit for tabular data — trains models, produces global & local explanations and interactive explanation dashboards.',
     category: 'Machine Learning',
     tech: ['Python', 'FastAPI', 'scikit-learn', 'XGBoost', 'PyTorch', 'SHAP', 'LIME', 'React'],
-    images: ['/x1','/x2'],
+    images: ['/x1.png','/x2.png'],
     githubUrl: 'https://github.com/Haseebahmad22/Xplainml',
     keyFeatures: [
       'Automated model training pipeline',
@@ -44,7 +44,7 @@ export const projectsData = [
     description: 'AI-powered documentation assistant that auto-generates docstrings, module docs and interactive documentation from source code.',
     category: 'Developer Tools',
     tech: ['Python', 'FastAPI', 'LLM Adapters', 'React', 'TypeScript', 'Tailwind'],
-    images: ['/cd1','/cd2','/cd3'],
+    images: ['/cd1.png','/cd2.png','/cd3.png'],
     githubUrl: 'https://github.com/Haseebahmad22/codescribe',
     keyFeatures: [
       'AI docstring & comment generation',
