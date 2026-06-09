@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   SiReact, SiJavascript, SiTypescript, SiNextdotjs, SiTailwindcss,
-  SiFramer, SiHtml5, SiCss,
+  SiFramer, SiHtml5, SiCss3,
   SiNodedotjs, SiExpress, SiMongodb, SiPostgresql, SiFirebase,
   SiPython, SiFastapi, SiDjango, SiRedis, SiMysql,
   SiCplusplus,
@@ -23,7 +23,7 @@ const groups = [
       { name: 'Tailwind CSS', Icon: SiTailwindcss, color: '#38BDF8' },
       { name: 'Framer Motion', Icon: SiFramer, color: '#E879F9' },
       { name: 'HTML5', Icon: SiHtml5, color: '#E34F26' },
-      { name: 'CSS3', Icon: SiCss, color: '#1572B6' },
+      { name: 'CSS3', Icon: SiCss3, color: '#1572B6' },
     ],
   },
   {
