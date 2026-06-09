@@ -60,9 +60,9 @@ export function Contact() {
 
             <div className="mt-10 space-y-3">
               {[
-                { icon: Mail, label: 'haseeb.ahmad@example.com', href: 'mailto:haseeb.ahmad@example.com' },
+                { icon: Mail, label: 'haseebahmad321csgo@gmail.com', href: 'mailto:haseebahmad321csgo@gmail.com' },
                 { icon: Github, label: 'github.com/Haseebahmad22', href: 'https://github.com/Haseebahmad22' },
-                { icon: Linkedin, label: 'linkedin.com/in/haseeb-ahmad', href: '#' },
+                { icon: Linkedin, label: 'linkedin.com/in/haseeb-ahmad22', href: 'https://www.linkedin.com/in/haseeb-ahmad22/' },
               ].map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   SiReact, SiJavascript, SiTypescript, SiNextdotjs, SiTailwindcss,
-  SiFramer, SiHtml5, SiCss3,
+  SiFramer, SiHtml5,
   SiNodedotjs, SiExpress, SiMongodb, SiPostgresql, SiFirebase,
   SiPython, SiFastapi, SiDjango, SiRedis, SiMysql,
   SiCplusplus,
   SiGit, SiDocker, SiFigma, SiKubernetes,
   SiTerraform, SiJest, SiCypress, SiGithubactions,
 } from 'react-icons/si';
-import { FaAws } from 'react-icons/fa6';
+import { FaAws, FaCss3Alt } from 'react-icons/fa6';
 import { TbBrandCSharp } from 'react-icons/tb';
 import { Reveal, SectionLabel } from './Reveal';
 
@@ -23,7 +23,7 @@ const groups = [
       { name: 'Tailwind CSS', Icon: SiTailwindcss, color: '#38BDF8' },
       { name: 'Framer Motion', Icon: SiFramer, color: '#E879F9' },
       { name: 'HTML5', Icon: SiHtml5, color: '#E34F26' },
-      { name: 'CSS3', Icon: SiCss3, color: '#1572B6' },
+      { name: 'CSS3', Icon: FaCss3Alt, color: '#1572B6' },
     ],
   },
   {
