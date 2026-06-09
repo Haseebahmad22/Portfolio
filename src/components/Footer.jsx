@@ -58,7 +58,7 @@ const Footer = () => {
   ];
   const socials = [
     { icon: FaGithub, url: 'https://github.com', label: 'GitHub', color: '#181717' },
-    { icon: FaLinkedin, url: 'https://linkedin.com', label: 'LinkedIn', color: '#0A66C2' },
+    { icon: FaLinkedin, url: 'https://www.linkedin.com/in/haseeb-ahmad22/', label: 'LinkedIn', color: '#0A66C2' },
     { icon: FaTwitter, url: 'https://twitter.com', label: 'Twitter', color: '#1DA1F2' },
     { icon: FaInstagram, url: 'https://instagram.com', label: 'Instagram', color: '#E1306C' }
   ];

@@ -21,7 +21,7 @@ const SocialLinksBar = () => (
       <FaGithub />
     </SocialIcon>
     <SocialIcon
-      href="https://linkedin.com/in/haseeb-ahmad"
+      href="https://www.linkedin.com/in/haseeb-ahmad22/"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="LinkedIn profile"
